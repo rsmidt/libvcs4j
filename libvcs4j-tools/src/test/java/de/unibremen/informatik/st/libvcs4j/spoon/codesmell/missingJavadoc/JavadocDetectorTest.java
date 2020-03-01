@@ -77,14 +77,14 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")));
         assertEquals(
-                "Method getFieldAccessTest() has no javadoc.",
+                "<Method> getFieldAccessTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")));
         assertEquals(
-                "Method setFieldAccessTest(int) has no javadoc.",
+                "<Method> setFieldAccessTest(int) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")))
                         .get(0).getSummary().get()
         );
@@ -95,33 +95,42 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsVCM = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#visitCtMethod(missing_javadoc.CtMethod)"));
-        assertEquals("Tag @author is not allowed for this javadocable.", codeSmellsVCM.get(0).getSummary().get());
-        assertEquals("Tag @version is not allowed for this javadocable.", codeSmellsVCM.get(1).getSummary().get());
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsVCM.get(2).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Method> Tag @author is not allowed for this javadocable.",
+                codeSmellsVCM.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @version is not allowed for this javadocable.",
+                codeSmellsVCM.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsVCM.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(3).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(4).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsVCM.get(5).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @return, but the method has no return value.",
+                "<Method> Javadoc contains @return, but the method has no return value.",
                 codeSmellsVCM.get(6).getSummary().get()
         );
-        assertEquals("Missing tag @param method in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
-        assertEquals("Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(8).getSummary().get());
+        assertEquals("<Method> Missing tag @param method in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
+        assertEquals("<Method> Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(8).getSummary().get());
         assertEquals(
-                "Javadoc contains @param dingdong, but this parameter does not exists.",
+                "<Method> Javadoc contains @param dingdong, but this parameter does not exists.",
                 codeSmellsVCM.get(9).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Method> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsVCM.get(10).getSummary().get()
         );
 
@@ -129,33 +138,48 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsNBOAF = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#numberBetweenOneAndFour(int)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Method> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsNBOAF.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsNBOAF.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsNBOAF.get(2).getSummary().get());
 
 
         assertEquals(11, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#charRepeater(char,int)")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#charRepeater(char,int)"));
-        assertEquals("Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
-        assertEquals("Description of the @param repeatNumber is too short.", codeSmellsCR.get(1).getSummary().get());
-        assertEquals("Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals("<Method> Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
         assertEquals(
-                "Description of the @throws IllegalArgumentException is too short.",
+                "<Method> Description of the @param repeatNumber is too short.",
+                codeSmellsCR.get(1).getSummary().get()
+        );
+        assertEquals("<Method> Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @throws IllegalArgumentException is too short.",
                 codeSmellsCR.get(3).getSummary().get()
         );
         assertEquals(
-                "Description of the @exception IllegalStateException is too short.",
+                "<Method> Description of the @exception IllegalStateException is too short.",
                 codeSmellsCR.get(4).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCR.get(7).getSummary().get());
-        assertEquals("Description of the @serialData tag is too short.", codeSmellsCR.get(8).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(9).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCR.get(10).getSummary().get());
+        assertEquals("<Method> Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
+        assertEquals("<Method> Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @deprecated tag is too short.",
+                codeSmellsCR.get(7).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Description of the @serialData tag is too short.",
+                codeSmellsCR.get(8).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsCR.get(9).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Long-description of this javadoc is too short.",
+                codeSmellsCR.get(10).getSummary().get()
+        );
 
         assertEquals(
                 3,
@@ -163,9 +187,9 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsND = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#noDescription(java.lang.String)"));
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
+        assertEquals("<Method> Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
+        assertEquals("<Method> No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
 
         assertEquals(
                 1,
@@ -173,7 +197,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)"))
         );
         assertEquals(
-                "Method writeToFile(java.lang.String,java.lang.String) has no javadoc.",
+                "<Method> writeToFile(java.lang.String,java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)")))
                         .get(0).getSummary().get()
@@ -188,10 +212,13 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsRWJSON = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#readAndWriteJSON(java.lang.String,java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalFormatException in the javadoc.",
+                "<Method> Missing tag @throws IllegalFormatException in the javadoc.",
                 codeSmellsRWJSON.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @throws ParseException in the javadoc.", codeSmellsRWJSON.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Missing tag @throws ParseException in the javadoc.",
+                codeSmellsRWJSON.get(1).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#readJSON(java.lang.String)")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#negativNumber(int)")));
@@ -235,33 +262,42 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsVCM = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#visitCtMethod(missing_javadoc.CtMethod)"));
-        assertEquals("Tag @author is not allowed for this javadocable.", codeSmellsVCM.get(0).getSummary().get());
-        assertEquals("Tag @version is not allowed for this javadocable.", codeSmellsVCM.get(1).getSummary().get());
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsVCM.get(2).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Method> Tag @author is not allowed for this javadocable.",
+                codeSmellsVCM.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @version is not allowed for this javadocable.",
+                codeSmellsVCM.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsVCM.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(3).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(4).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsVCM.get(5).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @return, but the method has no return value.",
+                "<Method> Javadoc contains @return, but the method has no return value.",
                 codeSmellsVCM.get(6).getSummary().get()
         );
-        assertEquals("Missing tag @param method in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
-        assertEquals("Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(8).getSummary().get());
+        assertEquals("<Method> Missing tag @param method in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
+        assertEquals("<Method> Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(8).getSummary().get());
         assertEquals(
-                "Javadoc contains @param dingdong, but this parameter does not exists.",
+                "<Method> Javadoc contains @param dingdong, but this parameter does not exists.",
                 codeSmellsVCM.get(9).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Method> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsVCM.get(10).getSummary().get()
         );
 
@@ -270,32 +306,44 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsNBOAF = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#numberBetweenOneAndFour(int)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Method> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsNBOAF.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsNBOAF.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsNBOAF.get(2).getSummary().get());
 
 
         assertEquals(10, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#charRepeater(char,int)")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#charRepeater(char,int)"));
-        assertEquals("Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
-        assertEquals("Description of the @param repeatNumber is too short.", codeSmellsCR.get(1).getSummary().get());
-        assertEquals("Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals("<Method> Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
         assertEquals(
-                "Description of the @throws IllegalArgumentException is too short.",
+                "<Method> Description of the @param repeatNumber is too short.",
+                codeSmellsCR.get(1).getSummary().get()
+        );
+        assertEquals("<Method> Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @throws IllegalArgumentException is too short.",
                 codeSmellsCR.get(3).getSummary().get()
         );
         assertEquals(
-                "Description of the @exception IllegalStateException is too short.",
+                "<Method> Description of the @exception IllegalStateException is too short.",
                 codeSmellsCR.get(4).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCR.get(7).getSummary().get());
-        assertEquals("Description of the @serialData tag is too short.", codeSmellsCR.get(8).getSummary().get());
-        assertEquals("Total-description of this javadoc is too short.", codeSmellsCR.get(9).getSummary().get());
+        assertEquals("<Method> Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
+        assertEquals("<Method> Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @deprecated tag is too short.",
+                codeSmellsCR.get(7).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Description of the @serialData tag is too short.",
+                codeSmellsCR.get(8).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Total-description of this javadoc is too short.",
+                codeSmellsCR.get(9).getSummary().get()
+        );
 
         assertEquals(
                 3,
@@ -303,9 +351,9 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsND = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#noDescription(java.lang.String)"));
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
+        assertEquals("<Method> Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
+        assertEquals("<Method> No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
 
         assertEquals(
                 1,
@@ -313,7 +361,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)"))
         );
         assertEquals(
-                "Method writeToFile(java.lang.String,java.lang.String) has no javadoc.",
+                "<Method> writeToFile(java.lang.String,java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)")))
                         .get(0).getSummary().get()
@@ -328,10 +376,13 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsRWJSON = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#readAndWriteJSON(java.lang.String,java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalFormatException in the javadoc.",
+                "<Method> Missing tag @throws IllegalFormatException in the javadoc.",
                 codeSmellsRWJSON.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @throws ParseException in the javadoc.", codeSmellsRWJSON.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Missing tag @throws ParseException in the javadoc.",
+                codeSmellsRWJSON.get(1).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#readJSON(java.lang.String)")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#negativNumber(int)")));
@@ -370,14 +421,14 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")));
         assertEquals(
-                "Method getFieldAccessTest() has no javadoc.",
+                "<Method> getFieldAccessTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")));
         assertEquals(
-                "Method setFieldAccessTest(int) has no javadoc.",
+                "<Method> setFieldAccessTest(int) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")))
                         .get(0).getSummary().get()
         );
@@ -388,29 +439,38 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsVCM = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#visitCtMethod(missing_javadoc.CtMethod)"));
-        assertEquals("Tag @author is not allowed for this javadocable.", codeSmellsVCM.get(0).getSummary().get());
-        assertEquals("Tag @version is not allowed for this javadocable.", codeSmellsVCM.get(1).getSummary().get());
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsVCM.get(2).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Method> Tag @author is not allowed for this javadocable.",
+                codeSmellsVCM.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @version is not allowed for this javadocable.",
+                codeSmellsVCM.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsVCM.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(3).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(4).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsVCM.get(5).getSummary().get()
         );
-        assertEquals("Missing tag @param method in the javadoc.", codeSmellsVCM.get(6).getSummary().get());
-        assertEquals("Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
+        assertEquals("<Method> Missing tag @param method in the javadoc.", codeSmellsVCM.get(6).getSummary().get());
+        assertEquals("<Method> Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
         assertEquals(
-                "Javadoc contains @param dingdong, but this parameter does not exists.",
+                "<Method> Javadoc contains @param dingdong, but this parameter does not exists.",
                 codeSmellsVCM.get(8).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Method> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsVCM.get(9).getSummary().get()
         );
 
@@ -419,30 +479,42 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsNBOAF = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#numberBetweenOneAndFour(int)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Method> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsNBOAF.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
 
         assertEquals(10, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#charRepeater(char,int)")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#charRepeater(char,int)"));
-        assertEquals("Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
-        assertEquals("Description of the @param repeatNumber is too short.", codeSmellsCR.get(1).getSummary().get());
+        assertEquals("<Method> Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
         assertEquals(
-                "Description of the @throws IllegalArgumentException is too short.",
+                "<Method> Description of the @param repeatNumber is too short.",
+                codeSmellsCR.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Description of the @throws IllegalArgumentException is too short.",
                 codeSmellsCR.get(2).getSummary().get()
         );
         assertEquals(
-                "Description of the @exception IllegalStateException is too short.",
+                "<Method> Description of the @exception IllegalStateException is too short.",
                 codeSmellsCR.get(3).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCR.get(4).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCR.get(5).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCR.get(6).getSummary().get());
-        assertEquals("Description of the @serialData tag is too short.", codeSmellsCR.get(7).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(8).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCR.get(9).getSummary().get());
+        assertEquals("<Method> Description of the @see tag is too short.", codeSmellsCR.get(4).getSummary().get());
+        assertEquals("<Method> Description of the @since tag is too short.", codeSmellsCR.get(5).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @deprecated tag is too short.",
+                codeSmellsCR.get(6).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Description of the @serialData tag is too short.",
+                codeSmellsCR.get(7).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsCR.get(8).getSummary().get()
+        );
+        assertEquals("<Method> Long-description of this javadoc is too short.", codeSmellsCR.get(9).getSummary().get());
 
         assertEquals(
                 2,
@@ -450,8 +522,8 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsND = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#noDescription(java.lang.String)"));
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsND.get(0).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsND.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @param text in the javadoc.", codeSmellsND.get(0).getSummary().get());
+        assertEquals("<Method> No description existing in this javadoc.", codeSmellsND.get(1).getSummary().get());
 
         assertEquals(
                 1,
@@ -459,7 +531,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)"))
         );
         assertEquals(
-                "Method writeToFile(java.lang.String,java.lang.String) has no javadoc.",
+                "<Method> writeToFile(java.lang.String,java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)")))
                         .get(0).getSummary().get()
@@ -474,10 +546,13 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsRWJSON = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#readAndWriteJSON(java.lang.String,java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalFormatException in the javadoc.",
+                "<Method> Missing tag @throws IllegalFormatException in the javadoc.",
                 codeSmellsRWJSON.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @throws ParseException in the javadoc.", codeSmellsRWJSON.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Missing tag @throws ParseException in the javadoc.",
+                codeSmellsRWJSON.get(1).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#readJSON(java.lang.String)")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#negativNumber(int)")));
@@ -488,7 +563,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.MethodTest#getFieldAccessTestForDescriptionLength()"))
         );
         assertEquals(
-                "Total-description of this javadoc is too short.",
+                "<Method> Total-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.MethodTest#getFieldAccessTestForDescriptionLength()")))
                         .get(0).getSummary().get()
@@ -524,14 +599,14 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")));
         assertEquals(
-                "Method getFieldAccessTest() has no javadoc.",
+                "<Method> getFieldAccessTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")));
         assertEquals(
-                "Method setFieldAccessTest(int) has no javadoc.",
+                "<Method> setFieldAccessTest(int) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")))
                         .get(0).getSummary().get()
         );
@@ -542,23 +617,32 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsVCM = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#visitCtMethod(missing_javadoc.CtMethod)"));
-        assertEquals("Tag @author is not allowed for this javadocable.", codeSmellsVCM.get(0).getSummary().get());
-        assertEquals("Tag @version is not allowed for this javadocable.", codeSmellsVCM.get(1).getSummary().get());
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsVCM.get(2).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Method> Tag @author is not allowed for this javadocable.",
+                codeSmellsVCM.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @version is not allowed for this javadocable.",
+                codeSmellsVCM.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsVCM.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(3).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(4).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsVCM.get(5).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @return, but the method has no return value.",
+                "<Method> Javadoc contains @return, but the method has no return value.",
                 codeSmellsVCM.get(6).getSummary().get()
         );
 
@@ -567,31 +651,40 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsNBOAF = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#numberBetweenOneAndFour(int)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Method> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsNBOAF.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsNBOAF.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsNBOAF.get(2).getSummary().get());
 
 
         assertEquals(9, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#charRepeater(char,int)")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#charRepeater(char,int)"));
-        assertEquals("Description of the @return tag is too short.", codeSmellsCR.get(0).getSummary().get());
+        assertEquals("<Method> Description of the @return tag is too short.", codeSmellsCR.get(0).getSummary().get());
         assertEquals(
-                "Description of the @throws IllegalArgumentException is too short.",
+                "<Method> Description of the @throws IllegalArgumentException is too short.",
                 codeSmellsCR.get(1).getSummary().get()
         );
         assertEquals(
-                "Description of the @exception IllegalStateException is too short.",
+                "<Method> Description of the @exception IllegalStateException is too short.",
                 codeSmellsCR.get(2).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCR.get(3).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCR.get(4).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCR.get(5).getSummary().get());
-        assertEquals("Description of the @serialData tag is too short.", codeSmellsCR.get(6).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(7).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCR.get(8).getSummary().get());
+        assertEquals("<Method> Description of the @see tag is too short.", codeSmellsCR.get(3).getSummary().get());
+        assertEquals("<Method> Description of the @since tag is too short.", codeSmellsCR.get(4).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @deprecated tag is too short.",
+                codeSmellsCR.get(5).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Description of the @serialData tag is too short.",
+                codeSmellsCR.get(6).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsCR.get(7).getSummary().get()
+        );
+        assertEquals("<Method> Long-description of this javadoc is too short.", codeSmellsCR.get(8).getSummary().get());
 
         assertEquals(
                 2,
@@ -599,8 +692,8 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsND = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#noDescription(java.lang.String)"));
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsND.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
+        assertEquals("<Method> No description existing in this javadoc.", codeSmellsND.get(1).getSummary().get());
 
         assertEquals(
                 1,
@@ -608,7 +701,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)"))
         );
         assertEquals(
-                "Method writeToFile(java.lang.String,java.lang.String) has no javadoc.",
+                "<Method> writeToFile(java.lang.String,java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)")))
                         .get(0).getSummary().get()
@@ -623,10 +716,13 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsRWJSON = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#readAndWriteJSON(java.lang.String,java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalFormatException in the javadoc.",
+                "<Method> Missing tag @throws IllegalFormatException in the javadoc.",
                 codeSmellsRWJSON.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @throws ParseException in the javadoc.", codeSmellsRWJSON.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Missing tag @throws ParseException in the javadoc.",
+                codeSmellsRWJSON.get(1).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#readJSON(java.lang.String)")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#negativNumber(int)")));
@@ -663,14 +759,14 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")));
         assertEquals(
-                "Method getFieldAccessTest() has no javadoc.",
+                "<Method> getFieldAccessTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")));
         assertEquals(
-                "Method setFieldAccessTest(int) has no javadoc.",
+                "<Method> setFieldAccessTest(int) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")))
                         .get(0).getSummary().get()
         );
@@ -681,25 +777,34 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsVCM = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#visitCtMethod(missing_javadoc.CtMethod)"));
-        assertEquals("Tag @author is not allowed for this javadocable.", codeSmellsVCM.get(0).getSummary().get());
-        assertEquals("Tag @version is not allowed for this javadocable.", codeSmellsVCM.get(1).getSummary().get());
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsVCM.get(2).getSummary().get());
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Tag @author is not allowed for this javadocable.",
+                codeSmellsVCM.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @version is not allowed for this javadocable.",
+                codeSmellsVCM.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsVCM.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsVCM.get(3).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @return, but the method has no return value.",
+                "<Method> Javadoc contains @return, but the method has no return value.",
                 codeSmellsVCM.get(4).getSummary().get()
         );
-        assertEquals("Missing tag @param method in the javadoc.", codeSmellsVCM.get(5).getSummary().get());
-        assertEquals("Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(6).getSummary().get());
+        assertEquals("<Method> Missing tag @param method in the javadoc.", codeSmellsVCM.get(5).getSummary().get());
+        assertEquals("<Method> Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(6).getSummary().get());
         assertEquals(
-                "Javadoc contains @param dingdong, but this parameter does not exists.",
+                "<Method> Javadoc contains @param dingdong, but this parameter does not exists.",
                 codeSmellsVCM.get(7).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Method> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsVCM.get(8).getSummary().get()
         );
 
@@ -707,22 +812,34 @@ public class JavadocDetectorTest {
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#numberBetweenOneAndFour(int)")));
         List<CodeSmell> codeSmellsNBOAF = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#numberBetweenOneAndFour(int)"));
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(0).getSummary().get());
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(0).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
 
 
         assertEquals(9, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#charRepeater(char,int)")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#charRepeater(char,int)"));
-        assertEquals("Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
-        assertEquals("Description of the @param repeatNumber is too short.", codeSmellsCR.get(1).getSummary().get());
-        assertEquals("Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsCR.get(3).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCR.get(4).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCR.get(5).getSummary().get());
-        assertEquals("Description of the @serialData tag is too short.", codeSmellsCR.get(6).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(7).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCR.get(8).getSummary().get());
+        assertEquals("<Method> Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @param repeatNumber is too short.",
+                codeSmellsCR.get(1).getSummary().get()
+        );
+        assertEquals("<Method> Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals("<Method> Description of the @see tag is too short.", codeSmellsCR.get(3).getSummary().get());
+        assertEquals("<Method> Description of the @since tag is too short.", codeSmellsCR.get(4).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @deprecated tag is too short.",
+                codeSmellsCR.get(5).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Description of the @serialData tag is too short.",
+                codeSmellsCR.get(6).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsCR.get(7).getSummary().get()
+        );
+        assertEquals("<Method> Long-description of this javadoc is too short.", codeSmellsCR.get(8).getSummary().get());
 
         assertEquals(
                 3,
@@ -730,9 +847,9 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsND = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#noDescription(java.lang.String)"));
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
+        assertEquals("<Method> Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
+        assertEquals("<Method> No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
 
         assertEquals(
                 1,
@@ -740,7 +857,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)"))
         );
         assertEquals(
-                "Method writeToFile(java.lang.String,java.lang.String) has no javadoc.",
+                "<Method> writeToFile(java.lang.String,java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)")))
                         .get(0).getSummary().get()
@@ -787,14 +904,14 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")));
         assertEquals(
-                "Method getFieldAccessTest() has no javadoc.",
+                "<Method> getFieldAccessTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")));
         assertEquals(
-                "Method setFieldAccessTest(int) has no javadoc.",
+                "<Method> setFieldAccessTest(int) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")))
                         .get(0).getSummary().get()
         );
@@ -805,29 +922,38 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsVCM = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#visitCtMethod(missing_javadoc.CtMethod)"));
-        assertEquals("Tag @author is not allowed for this javadocable.", codeSmellsVCM.get(0).getSummary().get());
-        assertEquals("Tag @version is not allowed for this javadocable.", codeSmellsVCM.get(1).getSummary().get());
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsVCM.get(2).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Method> Tag @author is not allowed for this javadocable.",
+                codeSmellsVCM.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @version is not allowed for this javadocable.",
+                codeSmellsVCM.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsVCM.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(3).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(4).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @return, but the method has no return value.",
+                "<Method> Javadoc contains @return, but the method has no return value.",
                 codeSmellsVCM.get(5).getSummary().get()
         );
-        assertEquals("Missing tag @param method in the javadoc.", codeSmellsVCM.get(6).getSummary().get());
-        assertEquals("Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
+        assertEquals("<Method> Missing tag @param method in the javadoc.", codeSmellsVCM.get(6).getSummary().get());
+        assertEquals("<Method> Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
         assertEquals(
-                "Javadoc contains @param dingdong, but this parameter does not exists.",
+                "<Method> Javadoc contains @param dingdong, but this parameter does not exists.",
                 codeSmellsVCM.get(8).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Method> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsVCM.get(9).getSummary().get()
         );
 
@@ -836,31 +962,40 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsNBOAF = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#numberBetweenOneAndFour(int)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Method> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsNBOAF.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
 
 
         assertEquals(10, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#charRepeater(char,int)")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#charRepeater(char,int)"));
-        assertEquals("Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
-        assertEquals("Description of the @param repeatNumber is too short.", codeSmellsCR.get(1).getSummary().get());
-        assertEquals("Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals("<Method> Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
         assertEquals(
-                "Description of the @throws IllegalArgumentException is too short.",
+                "<Method> Description of the @param repeatNumber is too short.",
+                codeSmellsCR.get(1).getSummary().get()
+        );
+        assertEquals("<Method> Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @throws IllegalArgumentException is too short.",
                 codeSmellsCR.get(3).getSummary().get()
         );
         assertEquals(
-                "Description of the @exception IllegalStateException is too short.",
+                "<Method> Description of the @exception IllegalStateException is too short.",
                 codeSmellsCR.get(4).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
-        assertEquals("Description of the @serialData tag is too short.", codeSmellsCR.get(7).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(8).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCR.get(9).getSummary().get());
+        assertEquals("<Method> Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
+        assertEquals("<Method> Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @serialData tag is too short.",
+                codeSmellsCR.get(7).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsCR.get(8).getSummary().get()
+        );
+        assertEquals("<Method> Long-description of this javadoc is too short.", codeSmellsCR.get(9).getSummary().get());
 
         assertEquals(
                 3,
@@ -868,9 +1003,9 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsND = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#noDescription(java.lang.String)"));
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
+        assertEquals("<Method> Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
+        assertEquals("<Method> No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
 
         assertEquals(
                 1,
@@ -878,7 +1013,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)"))
         );
         assertEquals(
-                "Method writeToFile(java.lang.String,java.lang.String) has no javadoc.",
+                "<Method> writeToFile(java.lang.String,java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)")))
                         .get(0).getSummary().get()
@@ -893,10 +1028,13 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsRWJSON = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#readAndWriteJSON(java.lang.String,java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalFormatException in the javadoc.",
+                "<Method> Missing tag @throws IllegalFormatException in the javadoc.",
                 codeSmellsRWJSON.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @throws ParseException in the javadoc.", codeSmellsRWJSON.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Missing tag @throws ParseException in the javadoc.",
+                codeSmellsRWJSON.get(1).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#readJSON(java.lang.String)")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#negativNumber(int)")));
@@ -931,7 +1069,7 @@ public class JavadocDetectorTest {
         Multimap smellMap = mappedCodeSmell(javadocDetector.getCodeSmells());
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest")));
         assertEquals(
-                "Long-description of this javadoc is too short.",
+                "<Class> Long-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest"))).get(0).getSummary().get()
         );
     }
@@ -961,14 +1099,14 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")));
         assertEquals(
-                "Method getFieldAccessTest() has no javadoc.",
+                "<Method> getFieldAccessTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")));
         assertEquals(
-                "Method setFieldAccessTest(int) has no javadoc.",
+                "<Method> setFieldAccessTest(int) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")))
                         .get(0).getSummary().get()
         );
@@ -982,23 +1120,38 @@ public class JavadocDetectorTest {
         assertEquals(11, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#charRepeater(char,int)")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#charRepeater(char,int)"));
-        assertEquals("Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
-        assertEquals("Description of the @param repeatNumber is too short.", codeSmellsCR.get(1).getSummary().get());
-        assertEquals("Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals("<Method> Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
         assertEquals(
-                "Description of the @throws IllegalArgumentException is too short.",
+                "<Method> Description of the @param repeatNumber is too short.",
+                codeSmellsCR.get(1).getSummary().get()
+        );
+        assertEquals("<Method> Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @throws IllegalArgumentException is too short.",
                 codeSmellsCR.get(3).getSummary().get()
         );
         assertEquals(
-                "Description of the @exception IllegalStateException is too short.",
+                "<Method> Description of the @exception IllegalStateException is too short.",
                 codeSmellsCR.get(4).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCR.get(7).getSummary().get());
-        assertEquals("Description of the @serialData tag is too short.", codeSmellsCR.get(8).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(9).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCR.get(10).getSummary().get());
+        assertEquals("<Method> Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
+        assertEquals("<Method> Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @deprecated tag is too short.",
+                codeSmellsCR.get(7).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Description of the @serialData tag is too short.",
+                codeSmellsCR.get(8).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsCR.get(9).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Long-description of this javadoc is too short.",
+                codeSmellsCR.get(10).getSummary().get()
+        );
 
         assertEquals(
                 0,
@@ -1058,11 +1211,11 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsNBOAF = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#numberBetweenOneAndFour(int)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Method> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsNBOAF.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsNBOAF.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @deprecated in the javadoc.", codeSmellsNBOAF.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsNBOAF.get(2).getSummary().get());
 
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#charRepeater(char,int)")));
@@ -1073,9 +1226,9 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsND = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#noDescription(java.lang.String)"));
-        assertEquals("Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @return in the javadoc.", codeSmellsND.get(0).getSummary().get());
+        assertEquals("<Method> Missing tag @param text in the javadoc.", codeSmellsND.get(1).getSummary().get());
+        assertEquals("<Method> No description existing in this javadoc.", codeSmellsND.get(2).getSummary().get());
 
         assertEquals(
                 0,
@@ -1129,33 +1282,42 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsVCM = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#visitCtMethod(missing_javadoc.CtMethod)"));
-        assertEquals("Tag @author is not allowed for this javadocable.", codeSmellsVCM.get(0).getSummary().get());
-        assertEquals("Tag @version is not allowed for this javadocable.", codeSmellsVCM.get(1).getSummary().get());
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsVCM.get(2).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Method> Tag @author is not allowed for this javadocable.",
+                codeSmellsVCM.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @version is not allowed for this javadocable.",
+                codeSmellsVCM.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsVCM.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(3).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(4).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsVCM.get(5).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @return, but the method has no return value.",
+                "<Method> Javadoc contains @return, but the method has no return value.",
                 codeSmellsVCM.get(6).getSummary().get()
         );
-        assertEquals("Missing tag @param method in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
-        assertEquals("Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(8).getSummary().get());
+        assertEquals("<Method> Missing tag @param method in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
+        assertEquals("<Method> Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(8).getSummary().get());
         assertEquals(
-                "Javadoc contains @param dingdong, but this parameter does not exists.",
+                "<Method> Javadoc contains @param dingdong, but this parameter does not exists.",
                 codeSmellsVCM.get(9).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Method> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsVCM.get(10).getSummary().get()
         );
 
@@ -1180,10 +1342,13 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsRWJSON = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#readAndWriteJSON(java.lang.String,java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalFormatException in the javadoc.",
+                "<Method> Missing tag @throws IllegalFormatException in the javadoc.",
                 codeSmellsRWJSON.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @throws ParseException in the javadoc.", codeSmellsRWJSON.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Missing tag @throws ParseException in the javadoc.",
+                codeSmellsRWJSON.get(1).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#readJSON(java.lang.String)")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#negativNumber(int)")));
@@ -1235,7 +1400,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)"))
         );
         assertEquals(
-                "Method writeToFile(java.lang.String,java.lang.String) has no javadoc.",
+                "<Method> writeToFile(java.lang.String,java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.MethodTest#writeToFile(java.lang.String,java.lang.String)")))
                         .get(0).getSummary().get()
@@ -1282,14 +1447,14 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")));
         assertEquals(
-                "Method getFieldAccessTest() has no javadoc.",
+                "<Method> getFieldAccessTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#getFieldAccessTest()")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")));
         assertEquals(
-                "Method setFieldAccessTest(int) has no javadoc.",
+                "<Method> setFieldAccessTest(int) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.MethodTest#setFieldAccessTest(int)")))
                         .get(0).getSummary().get()
         );
@@ -1300,33 +1465,42 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsVCM = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#visitCtMethod(missing_javadoc.CtMethod)"));
-        assertEquals("Tag @author is not allowed for this javadocable.", codeSmellsVCM.get(0).getSummary().get());
-        assertEquals("Tag @version is not allowed for this javadocable.", codeSmellsVCM.get(1).getSummary().get());
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsVCM.get(2).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Method> Tag @author is not allowed for this javadocable.",
+                codeSmellsVCM.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @version is not allowed for this javadocable.",
+                codeSmellsVCM.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsVCM.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(3).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IllegalArgumentException, but this does not thrown by this or a called executable.",
                 codeSmellsVCM.get(4).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsVCM.get(5).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @return, but the method has no return value.",
+                "<Method> Javadoc contains @return, but the method has no return value.",
                 codeSmellsVCM.get(6).getSummary().get()
         );
-        assertEquals("Missing tag @param method in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
-        assertEquals("Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(8).getSummary().get());
+        assertEquals("<Method> Missing tag @param method in the javadoc.", codeSmellsVCM.get(7).getSummary().get());
+        assertEquals("<Method> Missing tag @param <E> in the javadoc.", codeSmellsVCM.get(8).getSummary().get());
         assertEquals(
-                "Javadoc contains @param dingdong, but this parameter does not exists.",
+                "<Method> Javadoc contains @param dingdong, but this parameter does not exists.",
                 codeSmellsVCM.get(9).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Method> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsVCM.get(10).getSummary().get()
         );
 
@@ -1335,23 +1509,38 @@ public class JavadocDetectorTest {
         assertEquals(11, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#charRepeater(char,int)")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#charRepeater(char,int)"));
-        assertEquals("Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
-        assertEquals("Description of the @param repeatNumber is too short.", codeSmellsCR.get(1).getSummary().get());
-        assertEquals("Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals("<Method> Description of the @param c is too short.", codeSmellsCR.get(0).getSummary().get());
         assertEquals(
-                "Description of the @throws IllegalArgumentException is too short.",
+                "<Method> Description of the @param repeatNumber is too short.",
+                codeSmellsCR.get(1).getSummary().get()
+        );
+        assertEquals("<Method> Description of the @return tag is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @throws IllegalArgumentException is too short.",
                 codeSmellsCR.get(3).getSummary().get()
         );
         assertEquals(
-                "Description of the @exception IllegalStateException is too short.",
+                "<Method> Description of the @exception IllegalStateException is too short.",
                 codeSmellsCR.get(4).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCR.get(7).getSummary().get());
-        assertEquals("Description of the @serialData tag is too short.", codeSmellsCR.get(8).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(9).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCR.get(10).getSummary().get());
+        assertEquals("<Method> Description of the @see tag is too short.", codeSmellsCR.get(5).getSummary().get());
+        assertEquals("<Method> Description of the @since tag is too short.", codeSmellsCR.get(6).getSummary().get());
+        assertEquals(
+                "<Method> Description of the @deprecated tag is too short.",
+                codeSmellsCR.get(7).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Description of the @serialData tag is too short.",
+                codeSmellsCR.get(8).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsCR.get(9).getSummary().get()
+        );
+        assertEquals(
+                "<Method> Long-description of this javadoc is too short.",
+                codeSmellsCR.get(10).getSummary().get()
+        );
 
         assertEquals(
                 0,
@@ -1372,10 +1561,13 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsRWJSON = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.MethodTest#readAndWriteJSON(java.lang.String,java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalFormatException in the javadoc.",
+                "<Method> Missing tag @throws IllegalFormatException in the javadoc.",
                 codeSmellsRWJSON.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @throws ParseException in the javadoc.", codeSmellsRWJSON.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Missing tag @throws ParseException in the javadoc.",
+                codeSmellsRWJSON.get(1).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#readJSON(java.lang.String)")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.MethodTest#negativNumber(int)")));
@@ -1422,40 +1614,46 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon.emptyPackage")));
         assertEquals(
-                "No description existing in this javadoc.",
+                "<Package> No description existing in this javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon.emptyPackage")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon.noJavadocPackage")));
         assertEquals(
-                "Package noJavadocPackage has no javadoc.",
+                "<Package> noJavadocPackage has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon.noJavadocPackage")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon.tooShortShortDescriptionPackage")));
         assertEquals(
-                "Short-description of this javadoc is too short.",
+                "<Package> Short-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon.tooShortShortDescriptionPackage")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon.tooShortLongDescriptionPackage")));
         assertEquals(
-                "Long-description of this javadoc is too short.",
+                "<Package> Long-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon.tooShortLongDescriptionPackage")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(6, smellMap.keys().count(Optional.of("spoon.tooShortTagsPackage")));
         List<CodeSmell> codeSmellsSTP = (List<CodeSmell>) smellMap.get(Optional.of("spoon.tooShortTagsPackage"));
-        assertEquals("Tag @param is not allowed for this javadocable.", codeSmellsSTP.get(0).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsSTP.get(1).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsSTP.get(2).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsSTP.get(3).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsSTP.get(4).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsSTP.get(5).getSummary().get());
+        assertEquals(
+                "<Package> Tag @param is not allowed for this javadocable.",
+                codeSmellsSTP.get(0).getSummary().get()
+        );
+        assertEquals("<Package> Description of the @author tag is too short.", codeSmellsSTP.get(1).getSummary().get());
+        assertEquals(
+                "<Package> Description of the @version tag is too short.",
+                codeSmellsSTP.get(2).getSummary().get()
+        );
+        assertEquals("<Package> Description of the @see tag is too short.", codeSmellsSTP.get(3).getSummary().get());
+        assertEquals("<Package> Description of the @since tag is too short.", codeSmellsSTP.get(4).getSummary().get());
+        assertEquals("<Package> Description of the @serial tag is too short.", codeSmellsSTP.get(5).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("spoon.testing")));
     }
@@ -1518,35 +1716,35 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.classes")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc.classes).",
+                "<Package> Missing package-info for the package (missing_javadoc.classes).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.classes")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.enums")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc.enums).",
+                "<Package> Missing package-info for the package (missing_javadoc.enums).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.enums")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.interfaces")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc.interfaces).",
+                "<Package> Missing package-info for the package (missing_javadoc.interfaces).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.interfaces")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc).",
+                "<Package> Missing package-info for the package (missing_javadoc).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon")));
         assertEquals(
-                "Missing package-info for the typeless package (spoon).",
+                "<Package> Missing package-info for the typeless package (spoon).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon")))
                         .get(0).getSummary().get()
         );
@@ -1582,35 +1780,35 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.classes")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc.classes).",
+                "<Package> Missing package-info for the package (missing_javadoc.classes).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.classes")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.enums")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc.enums).",
+                "<Package> Missing package-info for the package (missing_javadoc.enums).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.enums")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.interfaces")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc.interfaces).",
+                "<Package> Missing package-info for the package (missing_javadoc.interfaces).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.interfaces")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc")));
         assertEquals(
-                "Missing package-info for the typeless package (missing_javadoc).",
+                "<Package> Missing package-info for the typeless package (missing_javadoc).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon")));
         assertEquals(
-                "Missing package-info for the typeless package (spoon).",
+                "<Package> Missing package-info for the typeless package (spoon).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon")))
                         .get(0).getSummary().get()
         );
@@ -1648,21 +1846,21 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.classes")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc.classes).",
+                "<Package> Missing package-info for the package (missing_javadoc.classes).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.classes")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.enums")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc.enums).",
+                "<Package> Missing package-info for the package (missing_javadoc.enums).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.enums")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.interfaces")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc.interfaces).",
+                "<Package> Missing package-info for the package (missing_javadoc.interfaces).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.interfaces")))
                         .get(0).getSummary().get()
         );
@@ -1704,28 +1902,28 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithoutJavadoc")));
         assertEquals(
-                "Field fieldWithoutJavadoc has no javadoc.",
+                "<Field> fieldWithoutJavadoc has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithoutJavadoc")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithoutDescription")));
         assertEquals(
-                "No description existing in this javadoc.",
+                "<Field> No description existing in this javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithoutDescription")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithTooShortDescription")));
         assertEquals(
-                "Total-description of this javadoc is too short.",
+                "<Field> Total-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithTooShortDescription")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithUnallowedTag")));
         assertEquals(
-                "Tag @author is not allowed for this javadocable.",
+                "<Field> Tag @author is not allowed for this javadocable.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithUnallowedTag")))
                         .get(0).getSummary().get()
         );
@@ -1736,18 +1934,24 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsFTSTD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.FieldTest#fieldWithTooShortTagDescription"));
-        assertEquals("Description of the @see tag is too short.", codeSmellsFTSTD.get(0).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsFTSTD.get(1).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsFTSTD.get(2).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsFTSTD.get(3).getSummary().get());
-        assertEquals("Description of the @serialField tag is too short.", codeSmellsFTSTD.get(4).getSummary().get());
+        assertEquals("<Field> Description of the @see tag is too short.", codeSmellsFTSTD.get(0).getSummary().get());
+        assertEquals("<Field> Description of the @since tag is too short.", codeSmellsFTSTD.get(1).getSummary().get());
+        assertEquals(
+                "<Field> Description of the @deprecated tag is too short.",
+                codeSmellsFTSTD.get(2).getSummary().get()
+        );
+        assertEquals("<Field> Description of the @serial tag is too short.", codeSmellsFTSTD.get(3).getSummary().get());
+        assertEquals(
+                "<Field> Description of the @serialField tag is too short.",
+                codeSmellsFTSTD.get(4).getSummary().get()
+        );
 
         assertEquals(
                 1,
                 smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithMissingAnnotationDeprecated"))
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Field> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.FieldTest#fieldWithMissingAnnotationDeprecated")))
                         .get(0).getSummary().get()
@@ -1755,7 +1959,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithMissingTagDeprecated")));
         assertEquals(
-                "Missing tag @deprecated in the javadoc.",
+                "<Field> Missing tag @deprecated in the javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithMissingTagDeprecated")))
                         .get(0).getSummary().get()
         );
@@ -1788,7 +1992,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithoutJavadoc")));
         assertEquals(
-                "Field fieldWithoutJavadoc has no javadoc.",
+                "<Field> fieldWithoutJavadoc has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithoutJavadoc")))
                         .get(0).getSummary().get()
         );
@@ -1798,7 +2002,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithUnallowedTag")));
         assertEquals(
-                "Tag @author is not allowed for this javadocable.",
+                "<Field> Tag @author is not allowed for this javadocable.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithUnallowedTag")))
                         .get(0).getSummary().get()
         );
@@ -1842,7 +2046,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithoutDescription")));
         assertEquals(
-                "No description existing in this javadoc.",
+                "<Field> No description existing in this javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithoutDescription")))
                         .get(0).getSummary().get()
         );
@@ -1860,7 +2064,7 @@ public class JavadocDetectorTest {
                 smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithMissingAnnotationDeprecated"))
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Field> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.FieldTest#fieldWithMissingAnnotationDeprecated")))
                         .get(0).getSummary().get()
@@ -1868,7 +2072,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithMissingTagDeprecated")));
         assertEquals(
-                "Missing tag @deprecated in the javadoc.",
+                "<Field> Missing tag @deprecated in the javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithMissingTagDeprecated")))
                         .get(0).getSummary().get()
         );
@@ -1914,11 +2118,17 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsFTSTD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.FieldTest#fieldWithTooShortTagDescription"));
-        assertEquals("Description of the @see tag is too short.", codeSmellsFTSTD.get(0).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsFTSTD.get(1).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsFTSTD.get(2).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsFTSTD.get(3).getSummary().get());
-        assertEquals("Description of the @serialField tag is too short.", codeSmellsFTSTD.get(4).getSummary().get());
+        assertEquals("<Field> Description of the @see tag is too short.", codeSmellsFTSTD.get(0).getSummary().get());
+        assertEquals("<Field> Description of the @since tag is too short.", codeSmellsFTSTD.get(1).getSummary().get());
+        assertEquals(
+                "<Field> Description of the @deprecated tag is too short.",
+                codeSmellsFTSTD.get(2).getSummary().get()
+        );
+        assertEquals("<Field> Description of the @serial tag is too short.", codeSmellsFTSTD.get(3).getSummary().get());
+        assertEquals(
+                "<Field> Description of the @serialField tag is too short.",
+                codeSmellsFTSTD.get(4).getSummary().get()
+        );
 
         assertEquals(
                 0,
@@ -1956,7 +2166,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithTooShortDescription")));
         assertEquals(
-                "Total-description of this javadoc is too short.",
+                "<Field> Total-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithTooShortDescription")))
                         .get(0).getSummary().get()
         );
@@ -2001,7 +2211,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithoutDescription")));
         assertEquals(
-                "No description existing in this javadoc.",
+                "<Field> No description existing in this javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithoutDescription")))
                         .get(0).getSummary().get()
         );
@@ -2015,18 +2225,24 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsFTSTD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.FieldTest#fieldWithTooShortTagDescription"));
-        assertEquals("Description of the @see tag is too short.", codeSmellsFTSTD.get(0).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsFTSTD.get(1).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsFTSTD.get(2).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsFTSTD.get(3).getSummary().get());
-        assertEquals("Description of the @serialField tag is too short.", codeSmellsFTSTD.get(4).getSummary().get());
+        assertEquals("<Field> Description of the @see tag is too short.", codeSmellsFTSTD.get(0).getSummary().get());
+        assertEquals("<Field> Description of the @since tag is too short.", codeSmellsFTSTD.get(1).getSummary().get());
+        assertEquals(
+                "<Field> Description of the @deprecated tag is too short.",
+                codeSmellsFTSTD.get(2).getSummary().get()
+        );
+        assertEquals("<Field> Description of the @serial tag is too short.", codeSmellsFTSTD.get(3).getSummary().get());
+        assertEquals(
+                "<Field> Description of the @serialField tag is too short.",
+                codeSmellsFTSTD.get(4).getSummary().get()
+        );
 
         assertEquals(
                 1,
                 smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithMissingAnnotationDeprecated"))
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Field> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.FieldTest#fieldWithMissingAnnotationDeprecated")))
                         .get(0).getSummary().get()
@@ -2034,7 +2250,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest#fieldWithMissingTagDeprecated")));
         assertEquals(
-                "Missing tag @deprecated in the javadoc.",
+                "<Field> Missing tag @deprecated in the javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest#fieldWithMissingTagDeprecated")))
                         .get(0).getSummary().get()
         );
@@ -2067,7 +2283,7 @@ public class JavadocDetectorTest {
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FieldTest")));
 
         assertEquals(
-                "Class FieldTest has no javadoc.",
+                "<Class> FieldTest has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FieldTest"))).get(0).getSummary().get()
         );
     }
@@ -2098,7 +2314,7 @@ public class JavadocDetectorTest {
         Multimap smellMap = mappedCodeSmell(javadocDetector.getCodeSmells());
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest()")));
         assertEquals(
-                "Constructor ConstructorTest() has no javadoc.",
+                "<Constructor> ConstructorTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ConstructorTest()")))
                         .get(0).getSummary().get()
         );
@@ -2107,44 +2323,65 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsCTS = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ConstructorTest(java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Constructor> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsCTS.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsCTS.get(1).getSummary().get());
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsCTS.get(2).getSummary().get());
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsCTS.get(3).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsCTS.get(4).getSummary().get());
+        assertEquals("<Constructor> Missing tag @deprecated in the javadoc.", codeSmellsCTS.get(1).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param text in the javadoc.", codeSmellsCTS.get(2).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param <T> in the javadoc.", codeSmellsCTS.get(3).getSummary().get());
+        assertEquals("<Constructor> No description existing in this javadoc.", codeSmellsCTS.get(4).getSummary().get());
 
         assertEquals(12, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest(int)")));
         List<CodeSmell> codeSmellsCTI = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ConstructorTest(int)"));
-        assertEquals("Tag @return is not allowed for this javadocable.", codeSmellsCTI.get(0).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Constructor> Tag @return is not allowed for this javadocable.",
+                codeSmellsCTI.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsCTI.get(1).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Constructor> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsCTI.get(2).getSummary().get()
         );
-        assertEquals("Description of the @param number is too short.", codeSmellsCTI.get(3).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCTI.get(4).getSummary().get());
         assertEquals(
-                "Description of the @exception IllegalArgumentException is too short.",
+                "<Constructor> Description of the @param number is too short.",
+                codeSmellsCTI.get(3).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Description of the @deprecated tag is too short.",
+                codeSmellsCTI.get(4).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Description of the @exception IllegalArgumentException is too short.",
                 codeSmellsCTI.get(5).getSummary().get()
         );
         assertEquals(
-                "Description of the @throws IllegalAccessException is too short.",
+                "<Constructor> Description of the @throws IllegalAccessException is too short.",
                 codeSmellsCTI.get(6).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCTI.get(7).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCTI.get(8).getSummary().get());
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Constructor> Description of the @see tag is too short.",
+                codeSmellsCTI.get(7).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Description of the @since tag is too short.",
+                codeSmellsCTI.get(8).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsCTI.get(9).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCTI.get(10).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCTI.get(11).getSummary().get());
+        assertEquals(
+                "<Constructor> Short-description of this javadoc is too short.",
+                codeSmellsCTI.get(10).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Long-description of this javadoc is too short.",
+                codeSmellsCTI.get(11).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest(java.lang.String,int")));
     }
@@ -2175,7 +2412,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest()")));
         assertEquals(
-                "Constructor ConstructorTest() has no javadoc.",
+                "<Constructor> ConstructorTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ConstructorTest()")))
                         .get(0).getSummary().get()
         );
@@ -2215,13 +2452,13 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsCTS = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ConstructorTest(java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Constructor> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsCTS.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsCTS.get(1).getSummary().get());
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsCTS.get(2).getSummary().get());
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsCTS.get(3).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsCTS.get(4).getSummary().get());
+        assertEquals("<Constructor> Missing tag @deprecated in the javadoc.", codeSmellsCTS.get(1).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param text in the javadoc.", codeSmellsCTS.get(2).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param <T> in the javadoc.", codeSmellsCTS.get(3).getSummary().get());
+        assertEquals("<Constructor> No description existing in this javadoc.", codeSmellsCTS.get(4).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest(int)")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest(java.lang.String,int")));
@@ -2282,33 +2519,54 @@ public class JavadocDetectorTest {
         assertEquals(12, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest(int)")));
         List<CodeSmell> codeSmellsCTI = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ConstructorTest(int)"));
-        assertEquals("Tag @return is not allowed for this javadocable.", codeSmellsCTI.get(0).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Constructor> Tag @return is not allowed for this javadocable.",
+                codeSmellsCTI.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsCTI.get(1).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Constructor> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsCTI.get(2).getSummary().get()
         );
-        assertEquals("Description of the @param number is too short.", codeSmellsCTI.get(3).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCTI.get(4).getSummary().get());
         assertEquals(
-                "Description of the @exception IllegalArgumentException is too short.",
+                "<Constructor> Description of the @param number is too short.",
+                codeSmellsCTI.get(3).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Description of the @deprecated tag is too short.",
+                codeSmellsCTI.get(4).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Description of the @exception IllegalArgumentException is too short.",
                 codeSmellsCTI.get(5).getSummary().get()
         );
         assertEquals(
-                "Description of the @throws IllegalAccessException is too short.",
+                "<Constructor> Description of the @throws IllegalAccessException is too short.",
                 codeSmellsCTI.get(6).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCTI.get(7).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCTI.get(8).getSummary().get());
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Constructor> Description of the @see tag is too short.",
+                codeSmellsCTI.get(7).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Description of the @since tag is too short.",
+                codeSmellsCTI.get(8).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsCTI.get(9).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCTI.get(10).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCTI.get(11).getSummary().get());
+        assertEquals(
+                "<Constructor> Short-description of this javadoc is too short.",
+                codeSmellsCTI.get(10).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Long-description of this javadoc is too short.",
+                codeSmellsCTI.get(11).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest(java.lang.String,int")));
     }
@@ -2342,7 +2600,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest()")));
         assertEquals(
-                "Constructor ConstructorTest() has no javadoc.",
+                "<Constructor> ConstructorTest() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ConstructorTest()")))
                         .get(0).getSummary().get()
         );
@@ -2352,33 +2610,54 @@ public class JavadocDetectorTest {
         assertEquals(12, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest(int)")));
         List<CodeSmell> codeSmellsCTI = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ConstructorTest(int)"));
-        assertEquals("Tag @return is not allowed for this javadocable.", codeSmellsCTI.get(0).getSummary().get());
         assertEquals(
-                "Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
+                "<Constructor> Tag @return is not allowed for this javadocable.",
+                codeSmellsCTI.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Javadoc contains @throws/@exception IllegalAccessException, but this does not thrown by this or a called executable.",
                 codeSmellsCTI.get(1).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Constructor> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsCTI.get(2).getSummary().get()
         );
-        assertEquals("Description of the @param number is too short.", codeSmellsCTI.get(3).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsCTI.get(4).getSummary().get());
         assertEquals(
-                "Description of the @exception IllegalArgumentException is too short.",
+                "<Constructor> Description of the @param number is too short.",
+                codeSmellsCTI.get(3).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Description of the @deprecated tag is too short.",
+                codeSmellsCTI.get(4).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Description of the @exception IllegalArgumentException is too short.",
                 codeSmellsCTI.get(5).getSummary().get()
         );
         assertEquals(
-                "Description of the @throws IllegalAccessException is too short.",
+                "<Constructor> Description of the @throws IllegalAccessException is too short.",
                 codeSmellsCTI.get(6).getSummary().get()
         );
-        assertEquals("Description of the @see tag is too short.", codeSmellsCTI.get(7).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsCTI.get(8).getSummary().get());
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Constructor> Description of the @see tag is too short.",
+                codeSmellsCTI.get(7).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Description of the @since tag is too short.",
+                codeSmellsCTI.get(8).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsCTI.get(9).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCTI.get(10).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsCTI.get(11).getSummary().get());
+        assertEquals(
+                "<Constructor> Short-description of this javadoc is too short.",
+                codeSmellsCTI.get(10).getSummary().get()
+        );
+        assertEquals(
+                "<Constructor> Long-description of this javadoc is too short.",
+                codeSmellsCTI.get(11).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.ConstructorTest(java.lang.String,int")));
     }
@@ -2413,8 +2692,14 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsFFTJT = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ConstructorTest#fieldForTheJavadocableTest"));
-        assertEquals("Tag @author is not allowed for this javadocable.", codeSmellsFFTJT.get(0).getSummary().get());
-        assertEquals("Tag @version is not allowed for this javadocable.", codeSmellsFFTJT.get(1).getSummary().get());
+        assertEquals(
+                "<Field> Tag @author is not allowed for this javadocable.",
+                codeSmellsFFTJT.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Field> Tag @version is not allowed for this javadocable.",
+                codeSmellsFFTJT.get(1).getSummary().get()
+        );
 
         assertEquals(
                 1,
@@ -2422,7 +2707,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.ConstructorTest#checkFileExtensionForTxt(java.lang.String)"))
         );
         assertEquals(
-                "Method checkFileExtensionForTxt(java.lang.String) has no javadoc.",
+                "<Method> checkFileExtensionForTxt(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.ConstructorTest#checkFileExtensionForTxt(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -2466,22 +2751,37 @@ public class JavadocDetectorTest {
 
         assertEquals(5, smellMap.keys().count(Optional.of("missing_javadoc.Override_faultyTags")));
         List<CodeSmell> codeSmellsOFT = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.Override_faultyTags"));
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsOFT.get(0).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsOFT.get(1).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsOFT.get(2).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsOFT.get(3).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsOFT.get(4).getSummary().get());
+        assertEquals(
+                "<AnnotationType> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsOFT.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @author tag is too short.",
+                codeSmellsOFT.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @version tag is too short.",
+                codeSmellsOFT.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @since tag is too short.",
+                codeSmellsOFT.get(3).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @see tag is too short.",
+                codeSmellsOFT.get(4).getSummary().get()
+        );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.Override_noDescription")));
         assertEquals(
-                "No description existing in this javadoc.",
+                "<AnnotationType> No description existing in this javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.Override_noDescription")))
                         .get(0).getSummary().get()
         );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.Override_noJavadoc")));
         assertEquals(
-                "AnnotationType Override_noJavadoc has no javadoc.",
+                "<AnnotationType> Override_noJavadoc has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.Override_noJavadoc")))
                         .get(0).getSummary().get()
         );
@@ -2489,8 +2789,14 @@ public class JavadocDetectorTest {
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.Override_shortDescription")));
         List<CodeSmell> codeSmellsOSD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.Override_shortDescription"));
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsOSD.get(0).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsOSD.get(1).getSummary().get());
+        assertEquals(
+                "<AnnotationType> Short-description of this javadoc is too short.",
+                codeSmellsOSD.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Long-description of this javadoc is too short.",
+                codeSmellsOSD.get(1).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.Override")));
     }
@@ -2529,8 +2835,14 @@ public class JavadocDetectorTest {
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.Override_shortDescription")));
         List<CodeSmell> codeSmellsOSD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.Override_shortDescription"));
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsOSD.get(0).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsOSD.get(1).getSummary().get());
+        assertEquals(
+                "<AnnotationType> Short-description of this javadoc is too short.",
+                codeSmellsOSD.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Long-description of this javadoc is too short.",
+                codeSmellsOSD.get(1).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.Override")));
     }
@@ -2564,11 +2876,26 @@ public class JavadocDetectorTest {
 
         assertEquals(5, smellMap.keys().count(Optional.of("missing_javadoc.Override_faultyTags")));
         List<CodeSmell> codeSmellsOFT = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.Override_faultyTags"));
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsOFT.get(0).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsOFT.get(1).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsOFT.get(2).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsOFT.get(3).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsOFT.get(4).getSummary().get());
+        assertEquals(
+                "<AnnotationType> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsOFT.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @author tag is too short.",
+                codeSmellsOFT.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @version tag is too short.",
+                codeSmellsOFT.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @since tag is too short.",
+                codeSmellsOFT.get(3).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @see tag is too short.",
+                codeSmellsOFT.get(4).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.Override_noDescription")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.Override_noJavadoc")));
@@ -2606,7 +2933,7 @@ public class JavadocDetectorTest {
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.Override_faultyTags")));
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.Override_noDescription")));
         assertEquals(
-                "No description existing in this javadoc.",
+                "<AnnotationType> No description existing in this javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.Override_noDescription")))
                         .get(0).getSummary().get()
         );
@@ -2646,7 +2973,7 @@ public class JavadocDetectorTest {
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.Override_noDescription")));
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.Override_noJavadoc")));
         assertEquals(
-                "AnnotationType Override_noJavadoc has no javadoc.",
+                "<AnnotationType> Override_noJavadoc has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.Override_noJavadoc")))
                         .get(0).getSummary().get()
         );
@@ -2685,15 +3012,30 @@ public class JavadocDetectorTest {
 
         assertEquals(5, smellMap.keys().count(Optional.of("missing_javadoc.Override_faultyTags")));
         List<CodeSmell> codeSmellsOFT = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.Override_faultyTags"));
-        assertEquals("Tag @unknown is not allowed for this javadocable.", codeSmellsOFT.get(0).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsOFT.get(1).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsOFT.get(2).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsOFT.get(3).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsOFT.get(4).getSummary().get());
+        assertEquals(
+                "<AnnotationType> Tag @unknown is not allowed for this javadocable.",
+                codeSmellsOFT.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @author tag is too short.",
+                codeSmellsOFT.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @version tag is too short.",
+                codeSmellsOFT.get(2).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @since tag is too short.",
+                codeSmellsOFT.get(3).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Description of the @see tag is too short.",
+                codeSmellsOFT.get(4).getSummary().get()
+        );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.Override_noDescription")));
         assertEquals(
-                "No description existing in this javadoc.",
+                "<AnnotationType> No description existing in this javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.Override_noDescription")))
                         .get(0).getSummary().get()
         );
@@ -2773,25 +3115,31 @@ public class JavadocDetectorTest {
         assertEquals(4, smellMap.keys().count(Optional.of("missing_javadoc.EmptyDescriptionEnum")));
         List<CodeSmell> codeSmellsEDE = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.EmptyDescriptionEnum"));
-        assertEquals("Missing tag @author in the javadoc.", codeSmellsEDE.get(0).getSummary().get());
-        assertEquals("Missing tag @version in the javadoc.", codeSmellsEDE.get(1).getSummary().get());
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsEDE.get(2).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsEDE.get(3).getSummary().get());
+        assertEquals("<Enum> Missing tag @author in the javadoc.", codeSmellsEDE.get(0).getSummary().get());
+        assertEquals("<Enum> Missing tag @version in the javadoc.", codeSmellsEDE.get(1).getSummary().get());
+        assertEquals("<Enum> Missing tag @deprecated in the javadoc.", codeSmellsEDE.get(2).getSummary().get());
+        assertEquals("<Enum> No description existing in this javadoc.", codeSmellsEDE.get(3).getSummary().get());
 
         assertEquals(8, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTagsEnum")));
         List<CodeSmell> codeSmellsFTE = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FaultyTagsEnum"));
-        assertEquals("Tag @return is not allowed for this javadocable.", codeSmellsFTE.get(0).getSummary().get());
-        assertEquals("Tag @param is not allowed for this javadocable.", codeSmellsFTE.get(1).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsFTE.get(2).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsFTE.get(3).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsFTE.get(4).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsFTE.get(5).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsFTE.get(6).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsFTE.get(7).getSummary().get());
+        assertEquals(
+                "<Enum> Tag @return is not allowed for this javadocable.",
+                codeSmellsFTE.get(0).getSummary().get()
+        );
+        assertEquals("<Enum> Tag @param is not allowed for this javadocable.", codeSmellsFTE.get(1).getSummary().get());
+        assertEquals("<Enum> Description of the @author tag is too short.", codeSmellsFTE.get(2).getSummary().get());
+        assertEquals("<Enum> Description of the @version tag is too short.", codeSmellsFTE.get(3).getSummary().get());
+        assertEquals("<Enum> Description of the @see tag is too short.", codeSmellsFTE.get(4).getSummary().get());
+        assertEquals(
+                "<Enum> Description of the @deprecated tag is too short.",
+                codeSmellsFTE.get(5).getSummary().get()
+        );
+        assertEquals("<Enum> Description of the @since tag is too short.", codeSmellsFTE.get(6).getSummary().get());
+        assertEquals("<Enum> Description of the @serial tag is too short.", codeSmellsFTE.get(7).getSummary().get());
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocEnum")));
         assertEquals(
-                "Enum NoJavadocEnum has no javadoc.",
+                "<Enum> NoJavadocEnum has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.NoJavadocEnum")))
                         .get(0).getSummary().get()
         );
@@ -2800,11 +3148,11 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsSDE = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionEnum"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Enum> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsSDE.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsSDE.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsSDE.get(2).getSummary().get());
+        assertEquals("<Enum> Short-description of this javadoc is too short.", codeSmellsSDE.get(1).getSummary().get());
+        assertEquals("<Enum> Long-description of this javadoc is too short.", codeSmellsSDE.get(2).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.WeekEnum")));
     }
@@ -2838,7 +3186,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocEnum")));
         assertEquals(
-                "Enum NoJavadocEnum has no javadoc.",
+                "<Enum> NoJavadocEnum has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.NoJavadocEnum")))
                         .get(0).getSummary().get()
         );
@@ -2874,10 +3222,10 @@ public class JavadocDetectorTest {
         assertEquals(4, smellMap.keys().count(Optional.of("missing_javadoc.EmptyDescriptionEnum")));
         List<CodeSmell> codeSmellsEDE = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.EmptyDescriptionEnum"));
-        assertEquals("Missing tag @author in the javadoc.", codeSmellsEDE.get(0).getSummary().get());
-        assertEquals("Missing tag @version in the javadoc.", codeSmellsEDE.get(1).getSummary().get());
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsEDE.get(2).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsEDE.get(3).getSummary().get());
+        assertEquals("<Enum> Missing tag @author in the javadoc.", codeSmellsEDE.get(0).getSummary().get());
+        assertEquals("<Enum> Missing tag @version in the javadoc.", codeSmellsEDE.get(1).getSummary().get());
+        assertEquals("<Enum> Missing tag @deprecated in the javadoc.", codeSmellsEDE.get(2).getSummary().get());
+        assertEquals("<Enum> No description existing in this javadoc.", codeSmellsEDE.get(3).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTagsEnum")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocEnum")));
@@ -2917,11 +3265,11 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsSDE = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionEnum"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Enum> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsSDE.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsSDE.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsSDE.get(2).getSummary().get());
+        assertEquals("<Enum> Short-description of this javadoc is too short.", codeSmellsSDE.get(1).getSummary().get());
+        assertEquals("<Enum> Long-description of this javadoc is too short.", codeSmellsSDE.get(2).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.WeekEnum")));
     }
@@ -2954,14 +3302,20 @@ public class JavadocDetectorTest {
 
         assertEquals(8, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTagsEnum")));
         List<CodeSmell> codeSmellsFTE = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FaultyTagsEnum"));
-        assertEquals("Tag @return is not allowed for this javadocable.", codeSmellsFTE.get(0).getSummary().get());
-        assertEquals("Tag @param is not allowed for this javadocable.", codeSmellsFTE.get(1).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsFTE.get(2).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsFTE.get(3).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsFTE.get(4).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsFTE.get(5).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsFTE.get(6).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsFTE.get(7).getSummary().get());
+        assertEquals(
+                "<Enum> Tag @return is not allowed for this javadocable.",
+                codeSmellsFTE.get(0).getSummary().get()
+        );
+        assertEquals("<Enum> Tag @param is not allowed for this javadocable.", codeSmellsFTE.get(1).getSummary().get());
+        assertEquals("<Enum> Description of the @author tag is too short.", codeSmellsFTE.get(2).getSummary().get());
+        assertEquals("<Enum> Description of the @version tag is too short.", codeSmellsFTE.get(3).getSummary().get());
+        assertEquals("<Enum> Description of the @see tag is too short.", codeSmellsFTE.get(4).getSummary().get());
+        assertEquals(
+                "<Enum> Description of the @deprecated tag is too short.",
+                codeSmellsFTE.get(5).getSummary().get()
+        );
+        assertEquals("<Enum> Description of the @since tag is too short.", codeSmellsFTE.get(6).getSummary().get());
+        assertEquals("<Enum> Description of the @serial tag is too short.", codeSmellsFTE.get(7).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocEnum")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.ShortDescriptionEnum")));
@@ -2995,10 +3349,10 @@ public class JavadocDetectorTest {
         assertEquals(4, smellMap.keys().count(Optional.of("missing_javadoc.EmptyDescriptionEnum")));
         List<CodeSmell> codeSmellsEDE = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.EmptyDescriptionEnum"));
-        assertEquals("Missing tag @author in the javadoc.", codeSmellsEDE.get(0).getSummary().get());
-        assertEquals("Missing tag @version in the javadoc.", codeSmellsEDE.get(1).getSummary().get());
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsEDE.get(2).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsEDE.get(3).getSummary().get());
+        assertEquals("<Enum> Missing tag @author in the javadoc.", codeSmellsEDE.get(0).getSummary().get());
+        assertEquals("<Enum> Missing tag @version in the javadoc.", codeSmellsEDE.get(1).getSummary().get());
+        assertEquals("<Enum> Missing tag @deprecated in the javadoc.", codeSmellsEDE.get(2).getSummary().get());
+        assertEquals("<Enum> No description existing in this javadoc.", codeSmellsEDE.get(3).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTagsEnum")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocEnum")));
@@ -3007,11 +3361,11 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsSDE = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionEnum"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Enum> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsSDE.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsSDE.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsSDE.get(2).getSummary().get());
+        assertEquals("<Enum> Short-description of this javadoc is too short.", codeSmellsSDE.get(1).getSummary().get());
+        assertEquals("<Enum> Long-description of this javadoc is too short.", codeSmellsSDE.get(2).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.WeekEnum")));
     }
@@ -3070,18 +3424,24 @@ public class JavadocDetectorTest {
 
         assertEquals(8, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTags")));
         List<CodeSmell> codeSmellsFT = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FaultyTags"));
-        assertEquals("Tag @return is not allowed for this javadocable.", codeSmellsFT.get(0).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsFT.get(1).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsFT.get(2).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsFT.get(3).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsFT.get(4).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsFT.get(5).getSummary().get());
-        assertEquals("Description of the @param <T> is too short.", codeSmellsFT.get(6).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsFT.get(7).getSummary().get());
+        assertEquals(
+                "<Class> Tag @return is not allowed for this javadocable.",
+                codeSmellsFT.get(0).getSummary().get()
+        );
+        assertEquals("<Class> Description of the @author tag is too short.", codeSmellsFT.get(1).getSummary().get());
+        assertEquals("<Class> Description of the @version tag is too short.", codeSmellsFT.get(2).getSummary().get());
+        assertEquals("<Class> Description of the @see tag is too short.", codeSmellsFT.get(3).getSummary().get());
+        assertEquals(
+                "<Class> Description of the @deprecated tag is too short.",
+                codeSmellsFT.get(4).getSummary().get()
+        );
+        assertEquals("<Class> Description of the @since tag is too short.", codeSmellsFT.get(5).getSummary().get());
+        assertEquals("<Class> Description of the @param <T> is too short.", codeSmellsFT.get(6).getSummary().get());
+        assertEquals("<Class> Description of the @serial tag is too short.", codeSmellsFT.get(7).getSummary().get());
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadoc")));
         assertEquals(
-                "Class NoJavadoc has no javadoc.",
+                "<Class> NoJavadoc has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.NoJavadoc")))
                         .get(0).getSummary().get()
         );
@@ -3089,18 +3449,18 @@ public class JavadocDetectorTest {
         assertEquals(3, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadoc$EmptyDescription")));
         List<CodeSmell> codeSmellsED = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.NoJavadoc$EmptyDescription"));
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsED.get(0).getSummary().get());
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsED.get(1).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsED.get(2).getSummary().get());
+        assertEquals("<Class> Missing tag @param <T> in the javadoc.", codeSmellsED.get(0).getSummary().get());
+        assertEquals("<Class> Missing tag @deprecated in the javadoc.", codeSmellsED.get(1).getSummary().get());
+        assertEquals("<Class> No description existing in this javadoc.", codeSmellsED.get(2).getSummary().get());
 
         assertEquals(3, smellMap.keys().count(Optional.of("missing_javadoc.ShortDescription")));
         List<CodeSmell> codeSmellsSD = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ShortDescription"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Class> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsSD.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsSD.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsSD.get(2).getSummary().get());
+        assertEquals("<Class> Short-description of this javadoc is too short.", codeSmellsSD.get(1).getSummary().get());
+        assertEquals("<Class> Long-description of this javadoc is too short.", codeSmellsSD.get(2).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.JavadocOkay")));
     }
@@ -3133,7 +3493,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadoc")));
         assertEquals(
-                "Class NoJavadoc has no javadoc.",
+                "<Class> NoJavadoc has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.NoJavadoc")))
                         .get(0).getSummary().get()
         );
@@ -3173,9 +3533,9 @@ public class JavadocDetectorTest {
         assertEquals(3, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadoc$EmptyDescription")));
         List<CodeSmell> codeSmellsED = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.NoJavadoc$EmptyDescription"));
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsED.get(0).getSummary().get());
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsED.get(1).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsED.get(2).getSummary().get());
+        assertEquals("<Class> Missing tag @param <T> in the javadoc.", codeSmellsED.get(0).getSummary().get());
+        assertEquals("<Class> Missing tag @deprecated in the javadoc.", codeSmellsED.get(1).getSummary().get());
+        assertEquals("<Class> No description existing in this javadoc.", codeSmellsED.get(2).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.ShortDescription")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.JavadocOkay")));
@@ -3212,11 +3572,11 @@ public class JavadocDetectorTest {
         assertEquals(3, smellMap.keys().count(Optional.of("missing_javadoc.ShortDescription")));
         List<CodeSmell> codeSmellsSD = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ShortDescription"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Class> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsSD.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsSD.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsSD.get(2).getSummary().get());
+        assertEquals("<Class> Short-description of this javadoc is too short.", codeSmellsSD.get(1).getSummary().get());
+        assertEquals("<Class> Long-description of this javadoc is too short.", codeSmellsSD.get(2).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.JavadocOkay")));
     }
@@ -3248,14 +3608,20 @@ public class JavadocDetectorTest {
 
         assertEquals(8, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTags")));
         List<CodeSmell> codeSmellsFT = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FaultyTags"));
-        assertEquals("Tag @return is not allowed for this javadocable.", codeSmellsFT.get(0).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsFT.get(1).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsFT.get(2).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsFT.get(3).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsFT.get(4).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsFT.get(5).getSummary().get());
-        assertEquals("Description of the @param <T> is too short.", codeSmellsFT.get(6).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsFT.get(7).getSummary().get());
+        assertEquals(
+                "<Class> Tag @return is not allowed for this javadocable.",
+                codeSmellsFT.get(0).getSummary().get()
+        );
+        assertEquals("<Class> Description of the @author tag is too short.", codeSmellsFT.get(1).getSummary().get());
+        assertEquals("<Class> Description of the @version tag is too short.", codeSmellsFT.get(2).getSummary().get());
+        assertEquals("<Class> Description of the @see tag is too short.", codeSmellsFT.get(3).getSummary().get());
+        assertEquals(
+                "<Class> Description of the @deprecated tag is too short.",
+                codeSmellsFT.get(4).getSummary().get()
+        );
+        assertEquals("<Class> Description of the @since tag is too short.", codeSmellsFT.get(5).getSummary().get());
+        assertEquals("<Class> Description of the @param <T> is too short.", codeSmellsFT.get(6).getSummary().get());
+        assertEquals("<Class> Description of the @serial tag is too short.", codeSmellsFT.get(7).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadoc")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadoc$EmptyDescription")));
@@ -3293,18 +3659,18 @@ public class JavadocDetectorTest {
         assertEquals(3, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadoc$EmptyDescription")));
         List<CodeSmell> codeSmellsED = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.NoJavadoc$EmptyDescription"));
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsED.get(0).getSummary().get());
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsED.get(1).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsED.get(2).getSummary().get());
+        assertEquals("<Class> Missing tag @param <T> in the javadoc.", codeSmellsED.get(0).getSummary().get());
+        assertEquals("<Class> Missing tag @deprecated in the javadoc.", codeSmellsED.get(1).getSummary().get());
+        assertEquals("<Class> No description existing in this javadoc.", codeSmellsED.get(2).getSummary().get());
 
         assertEquals(3, smellMap.keys().count(Optional.of("missing_javadoc.ShortDescription")));
         List<CodeSmell> codeSmellsSD = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ShortDescription"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Class> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsSD.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsSD.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsSD.get(2).getSummary().get());
+        assertEquals("<Class> Short-description of this javadoc is too short.", codeSmellsSD.get(1).getSummary().get());
+        assertEquals("<Class> Long-description of this javadoc is too short.", codeSmellsSD.get(2).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.JavadocOkay")));
     }
@@ -3332,25 +3698,25 @@ public class JavadocDetectorTest {
         Multimap smellMap = mappedCodeSmell(javadocDetector.getCodeSmells());
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTags#print()")));
         assertEquals(
-                "Method print() has no javadoc.",
+                "<Method> print() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FaultyTags#print()")))
                         .get(0).getSummary().get()
         );
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.JavadocOkay#print()")));
         assertEquals(
-                "Method print() has no javadoc.",
+                "<Method> print() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.JavadocOkay#print()")))
                         .get(0).getSummary().get()
         );
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadoc$EmptyDescription#print()")));
         assertEquals(
-                "Method print() has no javadoc.",
+                "<Method> print() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.NoJavadoc$EmptyDescription#print()")))
                         .get(0).getSummary().get()
         );
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.ShortDescription#print()")));
         assertEquals(
-                "Method print() has no javadoc.",
+                "<Method> print() has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ShortDescription#print()")))
                         .get(0).getSummary().get()
         );
@@ -3392,26 +3758,47 @@ public class JavadocDetectorTest {
         assertEquals(5, smellMap.keys().count(Optional.of("missing_javadoc.EmptyJavadocInterface")));
         List<CodeSmell> codeSmellsEJI = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.EmptyJavadocInterface"));
-        assertEquals("Missing tag @author in the javadoc.", codeSmellsEJI.get(0).getSummary().get());
-        assertEquals("Missing tag @version in the javadoc.", codeSmellsEJI.get(1).getSummary().get());
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsEJI.get(2).getSummary().get());
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsEJI.get(3).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsEJI.get(4).getSummary().get());
+        assertEquals("<Interface> Missing tag @author in the javadoc.", codeSmellsEJI.get(0).getSummary().get());
+        assertEquals("<Interface> Missing tag @version in the javadoc.", codeSmellsEJI.get(1).getSummary().get());
+        assertEquals("<Interface> Missing tag @param <T> in the javadoc.", codeSmellsEJI.get(2).getSummary().get());
+        assertEquals("<Interface> Missing tag @deprecated in the javadoc.", codeSmellsEJI.get(3).getSummary().get());
+        assertEquals("<Interface> No description existing in this javadoc.", codeSmellsEJI.get(4).getSummary().get());
 
         assertEquals(8, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTagsInterface")));
         List<CodeSmell> codeSmellsFTI = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FaultyTagsInterface"));
-        assertEquals("Tag @return is not allowed for this javadocable.", codeSmellsFTI.get(0).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsFTI.get(1).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsFTI.get(2).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsFTI.get(3).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsFTI.get(4).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsFTI.get(5).getSummary().get());
-        assertEquals("Description of the @param <T> is too short.", codeSmellsFTI.get(6).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsFTI.get(7).getSummary().get());
+        assertEquals(
+                "<Interface> Tag @return is not allowed for this javadocable.",
+                codeSmellsFTI.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @author tag is too short.",
+                codeSmellsFTI.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @version tag is too short.",
+                codeSmellsFTI.get(2).getSummary().get()
+        );
+        assertEquals("<Interface> Description of the @see tag is too short.", codeSmellsFTI.get(3).getSummary().get());
+        assertEquals(
+                "<Interface> Description of the @deprecated tag is too short.",
+                codeSmellsFTI.get(4).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @since tag is too short.",
+                codeSmellsFTI.get(5).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @param <T> is too short.",
+                codeSmellsFTI.get(6).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @serial tag is too short.",
+                codeSmellsFTI.get(7).getSummary().get()
+        );
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocInterface")));
         assertEquals(
-                "Interface NoJavadocInterface has no javadoc.",
+                "<Interface> NoJavadocInterface has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.NoJavadocInterface")))
                         .get(0).getSummary().get()
         );
@@ -3420,11 +3807,18 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsSDI = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionInterface"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Interface> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is " +
+                        "missing.",
                 codeSmellsSDI.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsSDI.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsSDI.get(2).getSummary().get());
+        assertEquals(
+                "<Interface> Short-description of this javadoc is too short.",
+                codeSmellsSDI.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Long-description of this javadoc is too short.",
+                codeSmellsSDI.get(2).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.JavadocOkayInterface")));
     }
@@ -3462,7 +3856,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocInterface")));
         assertEquals(
-                "Interface NoJavadocInterface has no javadoc.",
+                "<Interface> NoJavadocInterface has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.NoJavadocInterface")))
                         .get(0).getSummary().get()
         );
@@ -3502,11 +3896,11 @@ public class JavadocDetectorTest {
         assertEquals(5, smellMap.keys().count(Optional.of("missing_javadoc.EmptyJavadocInterface")));
         List<CodeSmell> codeSmellsEJI = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.EmptyJavadocInterface"));
-        assertEquals("Missing tag @author in the javadoc.", codeSmellsEJI.get(0).getSummary().get());
-        assertEquals("Missing tag @version in the javadoc.", codeSmellsEJI.get(1).getSummary().get());
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsEJI.get(2).getSummary().get());
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsEJI.get(3).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsEJI.get(4).getSummary().get());
+        assertEquals("<Interface> Missing tag @author in the javadoc.", codeSmellsEJI.get(0).getSummary().get());
+        assertEquals("<Interface> Missing tag @version in the javadoc.", codeSmellsEJI.get(1).getSummary().get());
+        assertEquals("<Interface> Missing tag @param <T> in the javadoc.", codeSmellsEJI.get(2).getSummary().get());
+        assertEquals("<Interface> Missing tag @deprecated in the javadoc.", codeSmellsEJI.get(3).getSummary().get());
+        assertEquals("<Interface> No description existing in this javadoc.", codeSmellsEJI.get(4).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTagsInterface")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocInterface")));
@@ -3550,11 +3944,18 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsSDI = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionInterface"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Interface> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is " +
+                        "missing.",
                 codeSmellsSDI.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsSDI.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsSDI.get(2).getSummary().get());
+        assertEquals(
+                "<Interface> Short-description of this javadoc is too short.",
+                codeSmellsSDI.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Long-description of this javadoc is too short.",
+                codeSmellsSDI.get(2).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.JavadocOkayInterface")));
     }
@@ -3591,14 +3992,35 @@ public class JavadocDetectorTest {
 
         assertEquals(8, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTagsInterface")));
         List<CodeSmell> codeSmellsFTI = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.FaultyTagsInterface"));
-        assertEquals("Tag @return is not allowed for this javadocable.", codeSmellsFTI.get(0).getSummary().get());
-        assertEquals("Description of the @author tag is too short.", codeSmellsFTI.get(1).getSummary().get());
-        assertEquals("Description of the @version tag is too short.", codeSmellsFTI.get(2).getSummary().get());
-        assertEquals("Description of the @see tag is too short.", codeSmellsFTI.get(3).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsFTI.get(4).getSummary().get());
-        assertEquals("Description of the @since tag is too short.", codeSmellsFTI.get(5).getSummary().get());
-        assertEquals("Description of the @param <T> is too short.", codeSmellsFTI.get(6).getSummary().get());
-        assertEquals("Description of the @serial tag is too short.", codeSmellsFTI.get(7).getSummary().get());
+        assertEquals(
+                "<Interface> Tag @return is not allowed for this javadocable.",
+                codeSmellsFTI.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @author tag is too short.",
+                codeSmellsFTI.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @version tag is too short.",
+                codeSmellsFTI.get(2).getSummary().get()
+        );
+        assertEquals("<Interface> Description of the @see tag is too short.", codeSmellsFTI.get(3).getSummary().get());
+        assertEquals(
+                "<Interface> Description of the @deprecated tag is too short.",
+                codeSmellsFTI.get(4).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @since tag is too short.",
+                codeSmellsFTI.get(5).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @param <T> is too short.",
+                codeSmellsFTI.get(6).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Description of the @serial tag is too short.",
+                codeSmellsFTI.get(7).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocInterface")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.ShortDescriptionInterface")));
@@ -3636,11 +4058,11 @@ public class JavadocDetectorTest {
         assertEquals(5, smellMap.keys().count(Optional.of("missing_javadoc.EmptyJavadocInterface")));
         List<CodeSmell> codeSmellsEJI = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.EmptyJavadocInterface"));
-        assertEquals("Missing tag @author in the javadoc.", codeSmellsEJI.get(0).getSummary().get());
-        assertEquals("Missing tag @version in the javadoc.", codeSmellsEJI.get(1).getSummary().get());
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsEJI.get(2).getSummary().get());
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsEJI.get(3).getSummary().get());
-        assertEquals("No description existing in this javadoc.", codeSmellsEJI.get(4).getSummary().get());
+        assertEquals("<Interface> Missing tag @author in the javadoc.", codeSmellsEJI.get(0).getSummary().get());
+        assertEquals("<Interface> Missing tag @version in the javadoc.", codeSmellsEJI.get(1).getSummary().get());
+        assertEquals("<Interface> Missing tag @param <T> in the javadoc.", codeSmellsEJI.get(2).getSummary().get());
+        assertEquals("<Interface> Missing tag @deprecated in the javadoc.", codeSmellsEJI.get(3).getSummary().get());
+        assertEquals("<Interface> No description existing in this javadoc.", codeSmellsEJI.get(4).getSummary().get());
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.FaultyTagsInterface")));
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocInterface")));
@@ -3649,11 +4071,18 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsSDI = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionInterface"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Interface> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is " +
+                        "missing.",
                 codeSmellsSDI.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsSDI.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsSDI.get(2).getSummary().get());
+        assertEquals(
+                "<Interface> Short-description of this javadoc is too short.",
+                codeSmellsSDI.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Long-description of this javadoc is too short.",
+                codeSmellsSDI.get(2).getSummary().get()
+        );
 
         assertEquals(0, smellMap.keys().count(Optional.of("missing_javadoc.JavadocOkayInterface")));
     }
@@ -3689,7 +4118,7 @@ public class JavadocDetectorTest {
                 smellMap.keys().count(Optional.of("missing_javadoc.EmptyJavadocInterface#counter(java.lang.String)"))
         );
         assertEquals(
-                "Method counter(java.lang.String) has no javadoc.",
+                "<Method> counter(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.EmptyJavadocInterface#counter(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -3700,7 +4129,7 @@ public class JavadocDetectorTest {
                 smellMap.keys().count(Optional.of("missing_javadoc.FaultyTagsInterface#counter(java.lang.String)"))
         );
         assertEquals(
-                "Method counter(java.lang.String) has no javadoc.",
+                "<Method> counter(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.FaultyTagsInterface#counter(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -3711,7 +4140,7 @@ public class JavadocDetectorTest {
                 smellMap.keys().count(Optional.of("missing_javadoc.JavadocOkayInterface#counter(java.lang.String)"))
         );
         assertEquals(
-                "Method counter(java.lang.String) has no javadoc.",
+                "<Method> counter(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.JavadocOkayInterface#counter(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -3722,7 +4151,7 @@ public class JavadocDetectorTest {
                 smellMap.keys().count(Optional.of("missing_javadoc.NoJavadocInterface#counter(java.lang.String)"))
         );
         assertEquals(
-                "Method counter(java.lang.String) has no javadoc.",
+                "<Method> counter(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.NoJavadocInterface#counter(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -3734,7 +4163,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)"))
         );
         assertEquals(
-                "Method counter(java.lang.String) has no javadoc.",
+                "<Method> counter(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -3778,7 +4207,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc).",
+                "<Package> Missing package-info for the package (missing_javadoc).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc")))
                         .get(0).getSummary().get()
         );
@@ -3786,8 +4215,14 @@ public class JavadocDetectorTest {
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.Override_shortDescription")));
         List<CodeSmell> codeSmellsOSD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.Override_shortDescription"));
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsOSD.get(0).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsOSD.get(1).getSummary().get());
+        assertEquals(
+                "<AnnotationType> Short-description of this javadoc is too short.",
+                codeSmellsOSD.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Long-description of this javadoc is too short.",
+                codeSmellsOSD.get(1).getSummary().get()
+        );
 
         assertEquals(
                 2,
@@ -3795,31 +4230,37 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsFMD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fieldWithMissingTagDeprecated"));
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsFMD.get(0).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsFMD.get(1).getSummary().get());
+        assertEquals("<Field> Missing tag @deprecated in the javadoc.", codeSmellsFMD.get(0).getSummary().get());
+        assertEquals(
+                "<Field> Short-description of this javadoc is too short.",
+                codeSmellsFMD.get(1).getSummary().get()
+        );
 
         assertEquals(4, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest$DescriptionEnum")));
         List<CodeSmell> codeSmellsED = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest$DescriptionEnum"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Enum> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsED.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsED.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsED.get(2).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsED.get(3).getSummary().get());
+        assertEquals("<Enum> Short-description of this javadoc is too short.", codeSmellsED.get(1).getSummary().get());
+        assertEquals("<Enum> Long-description of this javadoc is too short.", codeSmellsED.get(2).getSummary().get());
+        assertEquals("<Enum> Description of the @deprecated tag is too short.", codeSmellsED.get(3).getSummary().get());
 
         assertEquals(5, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest(java.lang.String)")));
         List<CodeSmell> codeSmellsCS = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest(java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Constructor> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsCS.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsCS.get(1).getSummary().get());
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsCS.get(2).getSummary().get());
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsCS.get(3).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCS.get(4).getSummary().get());
+        assertEquals("<Constructor> Missing tag @deprecated in the javadoc.", codeSmellsCS.get(1).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param text in the javadoc.", codeSmellsCS.get(2).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param <T> in the javadoc.", codeSmellsCS.get(3).getSummary().get());
+        assertEquals(
+                "<Constructor> Short-description of this javadoc is too short.",
+                codeSmellsCS.get(4).getSummary().get()
+        );
 
         assertEquals(
                 3,
@@ -3828,11 +4269,14 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsMFR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fileReaderTest(java.lang.String)"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsMFR.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @param file in the javadoc.", codeSmellsMFR.get(1).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsMFR.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @param file in the javadoc.", codeSmellsMFR.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsMFR.get(2).getSummary().get()
+        );
 
         assertEquals(
                 4,
@@ -3841,27 +4285,30 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsMFR2 = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fileReaderTest2(java.lang.String)"));
         assertEquals(
-                "Missing tag @throws FileNotFoundException in the javadoc.",
+                "<Method> Missing tag @throws FileNotFoundException in the javadoc.",
                 codeSmellsMFR2.get(0).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IOException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IOException, but this does not thrown by this or a called executable.",
                 codeSmellsMFR2.get(1).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsMFR2.get(2).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsMFR2.get(3).getSummary().get());
+        assertEquals("<Method> Missing tag @deprecated in the javadoc.", codeSmellsMFR2.get(2).getSummary().get());
+        assertEquals(
+                "<Method> Long-description of this javadoc is too short.",
+                codeSmellsMFR2.get(3).getSummary().get()
+        );
 
         assertEquals(3, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ReadByCharTest"));
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Class> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsCR.get(0).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Class> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsCR.get(1).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals("<Class> Short-description of this javadoc is too short.", codeSmellsCR.get(2).getSummary().get());
 
         assertEquals(
                 1,
@@ -3869,7 +4316,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)"))
         );
         assertEquals(
-                "Method counter(java.lang.String) has no javadoc.",
+                "<Method> counter(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -3879,15 +4326,22 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsISD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionInterface"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Interface> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is " +
+                        "missing.",
                 codeSmellsISD.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsISD.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsISD.get(2).getSummary().get());
+        assertEquals(
+                "<Interface> Short-description of this javadoc is too short.",
+                codeSmellsISD.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Long-description of this javadoc is too short.",
+                codeSmellsISD.get(2).getSummary().get()
+        );
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon.tooShortShortDescriptionPackage")));
         assertEquals(
-                "Short-description of this javadoc is too short.",
+                "<Package> Short-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon.tooShortShortDescriptionPackage")))
                         .get(0).getSummary().get()
         );
@@ -3923,7 +4377,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc).",
+                "<Package> Missing package-info for the package (missing_javadoc).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc")))
                         .get(0).getSummary().get()
         );
@@ -3931,8 +4385,14 @@ public class JavadocDetectorTest {
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.Override_shortDescription")));
         List<CodeSmell> codeSmellsOSD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.Override_shortDescription"));
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsOSD.get(0).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsOSD.get(1).getSummary().get());
+        assertEquals(
+                "<AnnotationType> Short-description of this javadoc is too short.",
+                codeSmellsOSD.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Long-description of this javadoc is too short.",
+                codeSmellsOSD.get(1).getSummary().get()
+        );
 
         assertEquals(
                 2,
@@ -3940,29 +4400,35 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsFMD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fieldWithMissingTagDeprecated"));
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsFMD.get(0).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsFMD.get(1).getSummary().get());
+        assertEquals("<Field> Missing tag @deprecated in the javadoc.", codeSmellsFMD.get(0).getSummary().get());
+        assertEquals(
+                "<Field> Short-description of this javadoc is too short.",
+                codeSmellsFMD.get(1).getSummary().get()
+        );
 
         assertEquals(4, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest$DescriptionEnum")));
         List<CodeSmell> codeSmellsED = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest$DescriptionEnum"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Enum> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsED.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsED.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsED.get(2).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsED.get(3).getSummary().get());
+        assertEquals("<Enum> Short-description of this javadoc is too short.", codeSmellsED.get(1).getSummary().get());
+        assertEquals("<Enum> Long-description of this javadoc is too short.", codeSmellsED.get(2).getSummary().get());
+        assertEquals("<Enum> Description of the @deprecated tag is too short.", codeSmellsED.get(3).getSummary().get());
 
         assertEquals(3, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest(java.lang.String)")));
         List<CodeSmell> codeSmellsCS = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest(java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Constructor> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsCS.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsCS.get(1).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCS.get(2).getSummary().get());
+        assertEquals("<Constructor> Missing tag @deprecated in the javadoc.", codeSmellsCS.get(1).getSummary().get());
+        assertEquals(
+                "<Constructor> Short-description of this javadoc is too short.",
+                codeSmellsCS.get(2).getSummary().get()
+        );
 
         assertEquals(
                 2,
@@ -3971,10 +4437,13 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsMFR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fileReaderTest(java.lang.String)"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsMFR.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsMFR.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsMFR.get(1).getSummary().get()
+        );
 
         assertEquals(
                 4,
@@ -3983,23 +4452,26 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsMFR2 = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fileReaderTest2(java.lang.String)"));
         assertEquals(
-                "Missing tag @throws FileNotFoundException in the javadoc.",
+                "<Method> Missing tag @throws FileNotFoundException in the javadoc.",
                 codeSmellsMFR2.get(0).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IOException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IOException, but this does not thrown by this or a called executable.",
                 codeSmellsMFR2.get(1).getSummary().get()
         );
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsMFR2.get(2).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsMFR2.get(3).getSummary().get());
+        assertEquals("<Method> Missing tag @deprecated in the javadoc.", codeSmellsMFR2.get(2).getSummary().get());
+        assertEquals(
+                "<Method> Long-description of this javadoc is too short.",
+                codeSmellsMFR2.get(3).getSummary().get()
+        );
 
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ReadByCharTest"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Class> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsCR.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(1).getSummary().get());
+        assertEquals("<Class> Short-description of this javadoc is too short.", codeSmellsCR.get(1).getSummary().get());
 
         assertEquals(
                 1,
@@ -4007,7 +4479,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)"))
         );
         assertEquals(
-                "Method counter(java.lang.String) has no javadoc.",
+                "<Method> counter(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -4017,15 +4489,22 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsISD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionInterface"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Interface> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is " +
+                        "missing.",
                 codeSmellsISD.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsISD.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsISD.get(2).getSummary().get());
+        assertEquals(
+                "<Interface> Short-description of this javadoc is too short.",
+                codeSmellsISD.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Long-description of this javadoc is too short.",
+                codeSmellsISD.get(2).getSummary().get()
+        );
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon.tooShortShortDescriptionPackage")));
         assertEquals(
-                "Short-description of this javadoc is too short.",
+                "<Package> Short-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon.tooShortShortDescriptionPackage")))
                         .get(0).getSummary().get()
         );
@@ -4061,7 +4540,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc).",
+                "<Package> Missing package-info for the package (missing_javadoc).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc")))
                         .get(0).getSummary().get()
         );
@@ -4069,8 +4548,14 @@ public class JavadocDetectorTest {
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.Override_shortDescription")));
         List<CodeSmell> codeSmellsOSD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.Override_shortDescription"));
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsOSD.get(0).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsOSD.get(1).getSummary().get());
+        assertEquals(
+                "<AnnotationType> Short-description of this javadoc is too short.",
+                codeSmellsOSD.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Long-description of this javadoc is too short.",
+                codeSmellsOSD.get(1).getSummary().get()
+        );
 
         assertEquals(
                 1,
@@ -4078,24 +4563,30 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsFMD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fieldWithMissingTagDeprecated"));
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsFMD.get(0).getSummary().get());
+        assertEquals(
+                "<Field> Short-description of this javadoc is too short.",
+                codeSmellsFMD.get(0).getSummary().get()
+        );
 
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest$DescriptionEnum")));
         List<CodeSmell> codeSmellsED = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest$DescriptionEnum"));
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsED.get(0).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsED.get(1).getSummary().get());
+        assertEquals("<Enum> Short-description of this javadoc is too short.", codeSmellsED.get(0).getSummary().get());
+        assertEquals("<Enum> Long-description of this javadoc is too short.", codeSmellsED.get(1).getSummary().get());
 
         assertEquals(4, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest(java.lang.String)")));
         List<CodeSmell> codeSmellsCS = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest(java.lang.String)"));
         assertEquals(
-                "Missing tag @throws IllegalArgumentException in the javadoc.",
+                "<Constructor> Missing tag @throws IllegalArgumentException in the javadoc.",
                 codeSmellsCS.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsCS.get(1).getSummary().get());
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsCS.get(2).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCS.get(3).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param text in the javadoc.", codeSmellsCS.get(1).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param <T> in the javadoc.", codeSmellsCS.get(2).getSummary().get());
+        assertEquals(
+                "<Constructor> Short-description of this javadoc is too short.",
+                codeSmellsCS.get(3).getSummary().get()
+        );
 
         assertEquals(
                 2,
@@ -4103,8 +4594,11 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsMFR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fileReaderTest(java.lang.String)"));
-        assertEquals("Missing tag @param file in the javadoc.", codeSmellsMFR.get(0).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsMFR.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @param file in the javadoc.", codeSmellsMFR.get(0).getSummary().get());
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsMFR.get(1).getSummary().get()
+        );
 
         assertEquals(
                 3,
@@ -4113,22 +4607,25 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsMFR2 = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fileReaderTest2(java.lang.String)"));
         assertEquals(
-                "Missing tag @throws FileNotFoundException in the javadoc.",
+                "<Method> Missing tag @throws FileNotFoundException in the javadoc.",
                 codeSmellsMFR2.get(0).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @throws/@exception IOException, but this does not thrown by this or a called executable.",
+                "<Method> Javadoc contains @throws/@exception IOException, but this does not thrown by this or a called executable.",
                 codeSmellsMFR2.get(1).getSummary().get()
         );
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsMFR2.get(2).getSummary().get());
+        assertEquals(
+                "<Method> Long-description of this javadoc is too short.",
+                codeSmellsMFR2.get(2).getSummary().get()
+        );
 
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ReadByCharTest"));
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Class> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsCR.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(1).getSummary().get());
+        assertEquals("<Class> Short-description of this javadoc is too short.", codeSmellsCR.get(1).getSummary().get());
 
         assertEquals(
                 1,
@@ -4136,7 +4633,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)"))
         );
         assertEquals(
-                "Method counter(java.lang.String) has no javadoc.",
+                "<Method> counter(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -4145,12 +4642,18 @@ public class JavadocDetectorTest {
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.ShortDescriptionInterface")));
         List<CodeSmell> codeSmellsISD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionInterface"));
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsISD.get(0).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsISD.get(1).getSummary().get());
+        assertEquals(
+                "<Interface> Short-description of this javadoc is too short.",
+                codeSmellsISD.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Long-description of this javadoc is too short.",
+                codeSmellsISD.get(1).getSummary().get()
+        );
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon.tooShortShortDescriptionPackage")));
         assertEquals(
-                "Short-description of this javadoc is too short.",
+                "<Package> Short-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon.tooShortShortDescriptionPackage")))
                         .get(0).getSummary().get()
         );
@@ -4186,7 +4689,7 @@ public class JavadocDetectorTest {
 
         assertEquals(1, smellMap.keys().count(Optional.of("missing_javadoc")));
         assertEquals(
-                "Missing package-info for the package (missing_javadoc).",
+                "<Package> Missing package-info for the package (missing_javadoc).",
                 ((List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc")))
                         .get(0).getSummary().get()
         );
@@ -4194,8 +4697,14 @@ public class JavadocDetectorTest {
         assertEquals(2, smellMap.keys().count(Optional.of("missing_javadoc.Override_shortDescription")));
         List<CodeSmell> codeSmellsOSD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.Override_shortDescription"));
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsOSD.get(0).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsOSD.get(1).getSummary().get());
+        assertEquals(
+                "<AnnotationType> Short-description of this javadoc is too short.",
+                codeSmellsOSD.get(0).getSummary().get()
+        );
+        assertEquals(
+                "<AnnotationType> Long-description of this javadoc is too short.",
+                codeSmellsOSD.get(1).getSummary().get()
+        );
 
         assertEquals(
                 2,
@@ -4203,27 +4712,33 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsFMD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fieldWithMissingTagDeprecated"));
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsFMD.get(0).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsFMD.get(1).getSummary().get());
+        assertEquals("<Field> Missing tag @deprecated in the javadoc.", codeSmellsFMD.get(0).getSummary().get());
+        assertEquals(
+                "<Field> Short-description of this javadoc is too short.",
+                codeSmellsFMD.get(1).getSummary().get()
+        );
 
         assertEquals(4, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest$DescriptionEnum")));
         List<CodeSmell> codeSmellsED = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest$DescriptionEnum"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Enum> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsED.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsED.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsED.get(2).getSummary().get());
-        assertEquals("Description of the @deprecated tag is too short.", codeSmellsED.get(3).getSummary().get());
+        assertEquals("<Enum> Short-description of this javadoc is too short.", codeSmellsED.get(1).getSummary().get());
+        assertEquals("<Enum> Long-description of this javadoc is too short.", codeSmellsED.get(2).getSummary().get());
+        assertEquals("<Enum> Description of the @deprecated tag is too short.", codeSmellsED.get(3).getSummary().get());
 
         assertEquals(4, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest(java.lang.String)")));
         List<CodeSmell> codeSmellsCS = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest(java.lang.String)"));
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsCS.get(0).getSummary().get());
-        assertEquals("Missing tag @param text in the javadoc.", codeSmellsCS.get(1).getSummary().get());
-        assertEquals("Missing tag @param <T> in the javadoc.", codeSmellsCS.get(2).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCS.get(3).getSummary().get());
+        assertEquals("<Constructor> Missing tag @deprecated in the javadoc.", codeSmellsCS.get(0).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param text in the javadoc.", codeSmellsCS.get(1).getSummary().get());
+        assertEquals("<Constructor> Missing tag @param <T> in the javadoc.", codeSmellsCS.get(2).getSummary().get());
+        assertEquals(
+                "<Constructor> Short-description of this javadoc is too short.",
+                codeSmellsCS.get(3).getSummary().get()
+        );
 
         assertEquals(
                 3,
@@ -4232,11 +4747,14 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsMFR = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fileReaderTest(java.lang.String)"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Method> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsMFR.get(0).getSummary().get()
         );
-        assertEquals("Missing tag @param file in the javadoc.", codeSmellsMFR.get(1).getSummary().get());
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsMFR.get(2).getSummary().get());
+        assertEquals("<Method> Missing tag @param file in the javadoc.", codeSmellsMFR.get(1).getSummary().get());
+        assertEquals(
+                "<Method> Short-description of this javadoc is too short.",
+                codeSmellsMFR.get(2).getSummary().get()
+        );
 
         assertEquals(
                 2,
@@ -4244,20 +4762,23 @@ public class JavadocDetectorTest {
         );
         List<CodeSmell> codeSmellsMFR2 = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ReadByCharTest#fileReaderTest2(java.lang.String)"));
-        assertEquals("Missing tag @deprecated in the javadoc.", codeSmellsMFR2.get(0).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsMFR2.get(1).getSummary().get());
+        assertEquals("<Method> Missing tag @deprecated in the javadoc.", codeSmellsMFR2.get(0).getSummary().get());
+        assertEquals(
+                "<Method> Long-description of this javadoc is too short.",
+                codeSmellsMFR2.get(1).getSummary().get()
+        );
 
         assertEquals(3, smellMap.keys().count(Optional.of("missing_javadoc.ReadByCharTest")));
         List<CodeSmell> codeSmellsCR = (List<CodeSmell>) smellMap.get(Optional.of("missing_javadoc.ReadByCharTest"));
         assertEquals(
-                "Javadoc contains @param <T>, but this parameter does not exists.",
+                "<Class> Javadoc contains @param <T>, but this parameter does not exists.",
                 codeSmellsCR.get(0).getSummary().get()
         );
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Class> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
                 codeSmellsCR.get(1).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsCR.get(2).getSummary().get());
+        assertEquals("<Class> Short-description of this javadoc is too short.", codeSmellsCR.get(2).getSummary().get());
 
         assertEquals(
                 1,
@@ -4265,7 +4786,7 @@ public class JavadocDetectorTest {
                         .count(Optional.of("missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)"))
         );
         assertEquals(
-                "Method counter(java.lang.String) has no javadoc.",
+                "<Method> counter(java.lang.String) has no javadoc.",
                 ((List<CodeSmell>) smellMap.get(Optional.of(
                         "missing_javadoc.ShortDescriptionInterface#counter(java.lang.String)")))
                         .get(0).getSummary().get()
@@ -4275,15 +4796,22 @@ public class JavadocDetectorTest {
         List<CodeSmell> codeSmellsISD = (List<CodeSmell>) smellMap.get(Optional.of(
                 "missing_javadoc.ShortDescriptionInterface"));
         assertEquals(
-                "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing.",
+                "<Interface> Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is " +
+                        "missing.",
                 codeSmellsISD.get(0).getSummary().get()
         );
-        assertEquals("Short-description of this javadoc is too short.", codeSmellsISD.get(1).getSummary().get());
-        assertEquals("Long-description of this javadoc is too short.", codeSmellsISD.get(2).getSummary().get());
+        assertEquals(
+                "<Interface> Short-description of this javadoc is too short.",
+                codeSmellsISD.get(1).getSummary().get()
+        );
+        assertEquals(
+                "<Interface> Long-description of this javadoc is too short.",
+                codeSmellsISD.get(2).getSummary().get()
+        );
 
         assertEquals(1, smellMap.keys().count(Optional.of("spoon.tooShortShortDescriptionPackage")));
         assertEquals(
-                "Short-description of this javadoc is too short.",
+                "<Package> Short-description of this javadoc is too short.",
                 ((List<CodeSmell>) smellMap.get(Optional.of("spoon.tooShortShortDescriptionPackage")))
                         .get(0).getSummary().get()
         );

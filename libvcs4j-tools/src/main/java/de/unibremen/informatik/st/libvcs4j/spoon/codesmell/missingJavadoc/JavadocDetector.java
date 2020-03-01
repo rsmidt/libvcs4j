@@ -228,7 +228,7 @@ public class JavadocDetector extends CodeSmellDetector {
                 javadocableList.contains(Javadocable.METHOD) && accessModifierList.contains(method.getVisibility())) {
             if (!isFieldAccess(method) || (isFieldAccess(method) && fieldAccessMustBeDocumented)) {
                 addCodeSmell(method, Collections.emptyList(), createSignature(method).orElse(null),
-                        "Method " + method.getSignature() + " has no javadoc."
+                        "<Method> " + method.getSignature() + " has no javadoc."
                 );
             }
         }
@@ -252,7 +252,7 @@ public class JavadocDetector extends CodeSmellDetector {
         if (!ctPackage.hasPackageInfo() && !checkedPackages.contains(ctPackage)) {
             checkedPackages.add(ctPackage);
             addCodeSmell(owner, Collections.emptyList(), createSignature(ctPackage).orElse(null),
-                    "Missing package-info for the package (" + ctPackage.getQualifiedName() + ")."
+                    "<Package> Missing package-info for the package (" + ctPackage.getQualifiedName() + ")."
             );
         }
         if (typelessPackageInfoNeeded) {
@@ -280,7 +280,7 @@ public class JavadocDetector extends CodeSmellDetector {
                     && declaringPackage.getTypes().isEmpty()) {
                 checkedPackages.add(declaringPackage);
                 addCodeSmell(element, Collections.emptyList(), createSignature(declaringPackage).orElse(null),
-                        "Missing package-info for the typeless package (" + declaringPackage.getQualifiedName() + ")."
+                        "<Package> Missing package-info for the typeless package (" + declaringPackage.getQualifiedName() + ")."
                 );
             }
             declaringPackage = declaringPackage.getDeclaringPackage();
@@ -302,7 +302,7 @@ public class JavadocDetector extends CodeSmellDetector {
                 javadocableList.contains(Javadocable.ANNOTATIONTYPE) &&
                 accessModifierList.contains(annotationType.getVisibility())) {
             addCodeSmell(annotationType, Collections.emptyList(), createSignature(annotationType).orElse(null),
-                    "AnnotationType " + annotationType.getSimpleName() + " has no javadoc."
+                    "<AnnotationType> " + annotationType.getSimpleName() + " has no javadoc."
             );
         }
         if (packageInfoNeeded && javadocableList.contains(Javadocable.PACKAGE)) {
@@ -328,7 +328,7 @@ public class JavadocDetector extends CodeSmellDetector {
         if ((ctClass.getDocComment() == null || ctClass.getDocComment().isEmpty()) &&
                 javadocableList.contains(Javadocable.CLASS) && accessModifierList.contains(ctClass.getVisibility())) {
             addCodeSmell(ctClass, Collections.emptyList(), createSignature(ctClass).orElse(null),
-                    "Class " + ctClass.getSimpleName() + " has no javadoc."
+                    formatSummaryFor(ctClass, ctClass.getSimpleName() + " has no javadoc.")
             );
         }
         if (packageInfoNeeded && javadocableList.contains(Javadocable.PACKAGE)) {
@@ -373,7 +373,7 @@ public class JavadocDetector extends CodeSmellDetector {
                 javadocableList.contains(Javadocable.CONSTRUCTOR)
                 && accessModifierList.contains(constructor.getVisibility())) {
             addCodeSmell(constructor, Collections.emptyList(), createSignature(constructor).orElse(null),
-                    "Constructor " + getConstructorNameWithParameter(constructor.getSignature()) +
+                    "<Constructor> " + getConstructorNameWithParameter(constructor.getSignature()) +
                             " has no javadoc."
             );
         }
@@ -394,7 +394,7 @@ public class JavadocDetector extends CodeSmellDetector {
         if ((ctEnum.getDocComment() == null || ctEnum.getDocComment().isEmpty()) &&
                 javadocableList.contains(Javadocable.ENUM) && accessModifierList.contains(ctEnum.getVisibility())) {
             addCodeSmell(ctEnum, Collections.emptyList(), createSignature(ctEnum).orElse(null),
-                    "Enum " + ctEnum.getSimpleName() + " has no javadoc."
+                    "<Enum> " + ctEnum.getSimpleName() + " has no javadoc."
             );
         }
         if (packageInfoNeeded && javadocableList.contains(Javadocable.PACKAGE)) {
@@ -420,7 +420,7 @@ public class JavadocDetector extends CodeSmellDetector {
         if ((field.getDocComment() == null || field.getDocComment().isEmpty()) &&
                 javadocableList.contains(Javadocable.FIELD) && accessModifierList.contains(field.getVisibility())) {
             addCodeSmell(field, Collections.emptyList(), createSignature(field).orElse(null),
-                    "Field " + field.getSimpleName() + " has no javadoc."
+                    "<Field> " + field.getSimpleName() + " has no javadoc."
             );
         }
         super.visitCtField(field);
@@ -441,7 +441,7 @@ public class JavadocDetector extends CodeSmellDetector {
                 javadocableList.contains(Javadocable.INTERFACE)
                 && accessModifierList.contains(ctInterface.getVisibility())) {
             addCodeSmell(ctInterface, Collections.emptyList(), createSignature(ctInterface).orElse(null),
-                    "Interface " + ctInterface.getSimpleName() + " has no javadoc."
+                    "<Interface> " + ctInterface.getSimpleName() + " has no javadoc."
             );
         }
         if (packageInfoNeeded && javadocableList.contains(Javadocable.PACKAGE)) {
@@ -465,7 +465,7 @@ public class JavadocDetector extends CodeSmellDetector {
         if ((ctPackage.getDocComment() == null || ctPackage.getDocComment().isEmpty()) &&
                 javadocableList.contains(Javadocable.PACKAGE)) {
             addCodeSmell(ctPackage, Collections.emptyList(), createSignature(ctPackage).orElse(null),
-                    "Package " + ctPackage.getSimpleName() + " has no javadoc."
+                    "<Package> " + ctPackage.getSimpleName() + " has no javadoc."
             );
         }
         if (typelessPackageInfoNeeded && javadocableList.contains(Javadocable.PACKAGE)
@@ -593,12 +593,12 @@ public class JavadocDetector extends CodeSmellDetector {
 
             if (!typeTags.contains(CtJavaDocTag.TagType.AUTHOR) && tagAuthor > 0 && type.getParent(CtType.class) == null) {
                 addCodeSmell(type, Collections.emptyList(), createSignature(type).orElse(null),
-                        "Missing tag @author in the javadoc."
+                        formatSummaryFor(type, "Missing tag @author in the javadoc.")
                 );
             }
             if (!typeTags.contains(CtJavaDocTag.TagType.VERSION) && tagVersion > 0 && type.getParent(CtType.class) == null) {
                 addCodeSmell(type, Collections.emptyList(), createSignature(type).orElse(null),
-                        "Missing tag @version in the javadoc."
+                        formatSummaryFor(type, "Missing tag @version in the javadoc.")
                 );
             }
 
@@ -691,7 +691,8 @@ public class JavadocDetector extends CodeSmellDetector {
             if (!allowedJavadocableTags.contains(tag.getType())) {
                 addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                         createSignature(javadoc.getParent()).orElse(null),
-                        "Tag " + tag.getType() + " is not allowed for this javadocable."
+                        formatSummaryFor(javadoc.getParent(), "Tag " + tag.getType() + " is not allowed for this " +
+                                "javadocable.")
                 );
             } else {
                 allowedDocumentedTags.add(tag);
@@ -715,12 +716,13 @@ public class JavadocDetector extends CodeSmellDetector {
         if (tagDeprecated > 0) {
             if (tagList.contains(CtJavaDocTag.TagType.DEPRECATED) && (element.getAnnotation(Deprecated.class) == null)) {
                 addCodeSmell(element, Collections.emptyList(), createSignature(element).orElse(null),
-                        "Javadoc contains @deprecated, but the annotation @Deprecated at the javadocable is missing."
+                        formatSummaryFor(element, "Javadoc contains @deprecated, but the annotation @Deprecated at " +
+                                "the javadocable is missing.")
                 );
             }
             if (!tagList.contains(CtJavaDocTag.TagType.DEPRECATED) && element.getAnnotation(Deprecated.class) != null) {
                 addCodeSmell(element, Collections.emptyList(), createSignature(element).orElse(null),
-                        "Missing tag @deprecated in the javadoc."
+                        formatSummaryFor(element, "Missing tag @deprecated in the javadoc.")
                 );
             }
         }
@@ -740,12 +742,12 @@ public class JavadocDetector extends CodeSmellDetector {
         if (tagReturn > 0) {
             if (!tagList.contains(CtJavaDocTag.TagType.RETURN) && !method.getType().getSimpleName().equals("void")) {
                 addCodeSmell(method, Collections.emptyList(), createSignature(method).orElse(null),
-                        "Missing tag @return in the javadoc."
+                        formatSummaryFor(method, "Missing tag @return in the javadoc.")
                 );
             }
             if (tagList.contains(CtJavaDocTag.TagType.RETURN) && method.getType().getSimpleName().equals("void")) {
                 addCodeSmell(method, Collections.emptyList(), createSignature(method).orElse(null),
-                        "Javadoc contains @return, but the method has no return value."
+                        formatSummaryFor(method, "Javadoc contains @return, but the method has no return value.")
                 );
             }
         }
@@ -788,7 +790,7 @@ public class JavadocDetector extends CodeSmellDetector {
                 if (!executableDocumentedParams.contains(s)) {
                     addCodeSmell(element, Collections.emptyList(),
                             createSignature(element).orElse(null),
-                            "Missing tag @param " + s + " in the javadoc."
+                            formatSummaryFor(element, "Missing tag @param " + s + " in the javadoc.")
                     );
                 }
             }
@@ -797,7 +799,11 @@ public class JavadocDetector extends CodeSmellDetector {
                 if (!elementParams.contains(s)) {
                     addCodeSmell(element, Collections.emptyList(),
                             createSignature(element).orElse(null),
-                            "Javadoc contains @param " + s + ", but this parameter does not exists."
+                            formatSummaryFor(
+                                    element,
+                                    "Javadoc contains @param " + s + ", but this parameter does" +
+                                            " not exists."
+                            )
                     );
                 }
             }
@@ -876,7 +882,10 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (!executableDocumentedExceptions.contains(ref.getSimpleName())) {
                         if (!isSuperExceptionClass(executableDocumentedExceptions, ref, imports)) {
                             addCodeSmell(executable, Collections.emptyList(), createSignature(executable).orElse(null),
-                                    "Missing tag @throws " + ref.getSimpleName() + " in the javadoc."
+                                    formatSummaryFor(
+                                            executable,
+                                            "Missing tag @throws " + ref.getSimpleName() + " in the javadoc."
+                                    )
                             );
                         }
                     }
@@ -893,8 +902,10 @@ public class JavadocDetector extends CodeSmellDetector {
                 if (!exceptionNames.contains(s)) {
                     if (!isSubExceptionClass(s, executableExceptions, imports)) {
                         addCodeSmell(executable, Collections.emptyList(), createSignature(executable).orElse(null),
-                                "Javadoc contains @throws/@exception " + s + ", but this does not thrown by " +
-                                        "this or a called executable."
+                                formatSummaryFor(
+                                        executable,
+                                        "Javadoc contains @throws/@exception " + s + ", but this does not thrown by this or a called executable."
+                                )
                         );
                     }
                 }
@@ -1120,6 +1131,36 @@ public class JavadocDetector extends CodeSmellDetector {
         return count;
     }
 
+    private String getTypeOf(final CtElement element) {
+        if (element instanceof CtEnum) {
+            return "Enum";
+        } else if (element instanceof CtClass) {
+            return "Class";
+        } else if (element instanceof CtMethod) {
+            return "Method";
+        } else if (element instanceof CtConstructor) {
+            return "Constructor";
+        } else if (element instanceof CtExecutable) {
+            // Catch remaining executable types (e.g. Lambdas).
+            return "Executable";
+        } else if (element instanceof CtField) {
+            return "Field";
+        } else if (element instanceof CtParameter) {
+            return "Parameter";
+        } else if (element instanceof CtAnnotationType) {
+            return "AnnotationType";
+        } else if (element instanceof CtInterface) {
+            return "Interface";
+        } else if (element instanceof CtPackage) {
+            return "Package";
+        }
+        throw new IllegalArgumentException(String.format("Unsupported spoon element: %s", element.getClass()));
+    }
+
+    private String formatSummaryFor(final CtElement element, final String summary) {
+        return String.format("<%s> %s", getTypeOf(element), summary);
+    }
+
     /**
      * Checks the length from the short description, long description and total description.
      * If the length do not match the specifications it will be throw a code smell.
@@ -1139,28 +1180,28 @@ public class JavadocDetector extends CodeSmellDetector {
                 .isEmpty() && (shortDescriptionLength > 0 || longDescriptionLength > 0 || totalDescriptionLength > 0)) {
             addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                     createSignature(javadoc.getParent()).orElse(null),
-                    "No description existing in this javadoc."
+                    formatSummaryFor(javadoc.getParent(), "No description existing in this javadoc.")
             );
         }
 
         if (!javadoc.getContent().isEmpty() && counter(javadoc.getShortDescription()) < shortDescriptionLength) {
             addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                     createSignature(javadoc.getParent()).orElse(null),
-                    "Short-description of this javadoc is too short."
+                    formatSummaryFor(javadoc.getParent(), "Short-description of this javadoc is too short.")
             );
         }
 
         if (!javadoc.getContent().isEmpty() && counter(javadoc.getLongDescription()) < longDescriptionLength) {
             addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                     createSignature(javadoc.getParent()).orElse(null),
-                    "Long-description of this javadoc is too short."
+                    formatSummaryFor(javadoc.getParent(), "Long-description of this javadoc is too short.")
             );
         }
 
         if (!javadoc.getContent().isEmpty() && counter(javadoc.getContent()) < totalDescriptionLength) {
             addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                     createSignature(javadoc.getParent()).orElse(null),
-                    "Total-description of this javadoc is too short."
+                    formatSummaryFor(javadoc.getParent(), "Total-description of this javadoc is too short.")
             );
         }
     }
@@ -1179,7 +1220,10 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagDeprecated) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @deprecated tag is too short."
+                                formatSummaryFor(
+                                        javadoc.getParent(),
+                                        "Description of the @deprecated tag is too short."
+                                )
                         );
                     }
                     break;
@@ -1187,7 +1231,10 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagSerialData) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @serialData tag is too short."
+                                formatSummaryFor(
+                                        javadoc.getParent(),
+                                        "Description of the @serialData tag is too short."
+                                )
                         );
                     }
                     break;
@@ -1195,7 +1242,10 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagSerialField) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @serialField tag is too short."
+                                formatSummaryFor(
+                                        javadoc.getParent(),
+                                        "Description of the @serialField tag is too short."
+                                )
                         );
                     }
                     break;
@@ -1203,7 +1253,7 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagSerial) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @serial tag is too short."
+                                formatSummaryFor(javadoc.getParent(), "Description of the @serial tag is too short.")
                         );
                     }
                     break;
@@ -1211,7 +1261,7 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagSee) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @see tag is too short."
+                                formatSummaryFor(javadoc.getParent(), "Description of the @see tag is too short.")
                         );
                     }
                     break;
@@ -1219,7 +1269,7 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagSince) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @since tag is too short."
+                                formatSummaryFor(javadoc.getParent(), "Description of the @since tag is too short.")
                         );
                     }
                     break;
@@ -1227,7 +1277,7 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagVersion) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @version tag is too short."
+                                formatSummaryFor(javadoc.getParent(), "Description of the @version tag is too short.")
                         );
                     }
                     break;
@@ -1235,7 +1285,7 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagAuthor) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @author tag is too short."
+                                formatSummaryFor(javadoc.getParent(), "Description of the @author tag is too short.")
                         );
                     }
                     break;
@@ -1243,7 +1293,7 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagReturn) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @return tag is too short."
+                                formatSummaryFor(javadoc.getParent(), "Description of the @return tag is too short.")
                         );
                     }
                     break;
@@ -1251,7 +1301,10 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagParam) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @param " + tag.getParam() + " is too short."
+                                formatSummaryFor(
+                                        javadoc.getParent(),
+                                        "Description of the @param " + tag.getParam() + " is too short."
+                                )
                         );
                     }
                     break;
@@ -1259,7 +1312,10 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagThrows) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @exception " + tag.getParam() + " is too short."
+                                formatSummaryFor(
+                                        javadoc.getParent(),
+                                        "Description of the @exception " + tag.getParam() + " is too short."
+                                )
                         );
                     }
                     break;
@@ -1267,7 +1323,10 @@ public class JavadocDetector extends CodeSmellDetector {
                     if (counter(tag.getContent()) < tagThrows) {
                         addCodeSmell(javadoc.getParent(), Collections.emptyList(),
                                 createSignature(javadoc.getParent()).orElse(null),
-                                "Description of the @throws " + tag.getParam() + " is too short."
+                                formatSummaryFor(
+                                        javadoc.getParent(),
+                                        "Description of the @throws " + tag.getParam() + " is too short."
+                                )
                         );
                     }
                     break;
